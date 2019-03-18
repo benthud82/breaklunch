@@ -1,5 +1,5 @@
 <?php
 include_once '../connections/conn_printvis.php';
 
-$whse = 2;
+$whse = 7;
 include 'kiosk_signin.php';
