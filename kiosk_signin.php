@@ -86,12 +86,13 @@
                         if (test_error === 1) {
                             showerrormodal();
                             clear_tsm_num();
+                        } else {
+                            //TSM found
+                            //Hide input text
+                            hide_input_container();
+                            //show break lunch insert
+                            show_breaklunch_container();
                         }
-                        //TSM found
-                        //Hide input text
-                        hide_input_container();
-                        //show break lunch insert
-                        show_breaklunch_container();
                     }
                 });
 
