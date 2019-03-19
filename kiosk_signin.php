@@ -4,6 +4,7 @@
     <head>
         <title>Break/Lunch Kiosk</title>
         <?php include_once '../printvis/headerincludes.php'; ?>
+        
 
     </head>
 
@@ -33,10 +34,10 @@
                 <!--Break/Lunch Container-->
                 <div id="container_breaklunch" class="hidden">
                     <div class="row" style="padding-top: 75px;">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-lg-offset-5 col-md-offset-4 col-sm-offset-3 ">
+                        <div class=" " style="margin: auto; width: 50%;">
 
-                            <button style="display: inline-block; width: 200px; margin: 0px;"  class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_break" data-whse="<?php echo $whse ?>" data-type="BREAK" >Break - 15 Minutes</button>
-                            <button style="display: inline-block; width: 200px; margin: 0px;" class="btn btn-lg btn-danger btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="LUNCH"  >Lunch - 30 Minutes</button>
+                            <button style="display: inline-block; width: 150px; margin: 20px;"  class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_break" data-whse="<?php echo $whse ?>" data-type="BREAK" >Break - 15 Min</button>
+                            <button style="display: inline-block; width: 150px; margin: 20px;" class="btn btn-lg btn-danger btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="LUNCH"  >Lunch - 30 Min</button>
 
                         </div>
                     </div>
