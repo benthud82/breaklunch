@@ -4,7 +4,7 @@
     <head>
         <title>Break/Lunch Kiosk</title>
         <?php include_once '../printvis/headerincludes.php'; ?>
-        
+
 
     </head>
 
@@ -33,13 +33,12 @@
 
                 <!--Break/Lunch Container-->
                 <div id="container_breaklunch" class="hidden">
-                    <div class="row" style="padding-top: 75px;">
-                        <div class=" " style="margin: auto; width: 50%;">
+                    <div class="row" style="padding-top: 75px;  margin: 0px; width: 100%; text-align: center;">
 
-                            <button style="display: inline-block; width: 150px; margin: 20px;"  class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_break" data-whse="<?php echo $whse ?>" data-type="BREAK" >Break - 15 Min</button>
-                            <button style="display: inline-block; width: 150px; margin: 20px;" class="btn btn-lg btn-danger btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="LUNCH"  >Lunch - 30 Min</button>
+                        <button style="display: inline-block; width: 150px; margin: 20px;"  class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_break" data-whse="<?php echo $whse ?>" data-type="BREAK" >Break - 15 Min</button>
+                        <button style="display: inline-block; width: 150px; margin: 20px;" class="btn btn-lg btn-danger btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="LUNCH"  >Lunch - 30 Min</button>
 
-                        </div>
+
                     </div>
                 </div
 
@@ -72,8 +71,8 @@
             $("body").tooltip({selector: '[data-toggle="tooltip"]'});
 
             function verifytsm() {
-      
-              
+
+
                 var tsmnum = $('#tsmnum').val();
                 $.ajax({
                     data: {tsmnum: tsmnum},
