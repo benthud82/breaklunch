@@ -33,10 +33,10 @@
                 <!--Break/Lunch Container-->
                 <div id="container_breaklunch" class="hidden">
                     <div class="row" style="padding-top: 75px;">
-                        <div class="col-lg-2 col-md-4 col-sm-6 col-lg-offset-5 col-md-offset-4 col-sm-offset-3 ">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-lg-offset-5 col-md-offset-4 col-sm-offset-3 ">
 
-                            <button class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_break" data-whse="<?php echo $whse ?>" data-type="BREAK" >Break - 15 Minutes</button>
-                            <button class="btn btn-lg btn-danger btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="LUNCH"  >Lunch - 30 Minutes</button>
+                            <button style="display: inline-block; width: 200px; margin: 0px;"  class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_break" data-whse="<?php echo $whse ?>" data-type="BREAK" >Break - 15 Minutes</button>
+                            <button style="display: inline-block; width: 200px; margin: 0px;" class="btn btn-lg btn-danger btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="LUNCH"  >Lunch - 30 Minutes</button>
 
                         </div>
                     </div>
@@ -70,9 +70,9 @@
         <script>
             $("body").tooltip({selector: '[data-toggle="tooltip"]'});
 
-            //verify tsm and show break/lunch buttons if valid
-            $(document).on("click touchstart", "#verifytsm", function (e) {
-                e.preventDefault();
+            function verifytsm() {
+      
+              
                 var tsmnum = $('#tsmnum').val();
                 $.ajax({
                     data: {tsmnum: tsmnum},
@@ -95,10 +95,15 @@
                         }
                     }
                 });
+            }
 
+            //verify tsm and show break/lunch buttons if valid
+            $(document).on("click touchstart", "#verifytsm", function (e) {
+                e.preventDefault();
+                verifytsm();
             });
 
-            //break button clicked
+            //break or lunch button clicked
             $(document).on("click touchstart", ".click_breaklunch", function (e) {
                 e.preventDefault();
                 var whse = $(this).attr('data-whse');
