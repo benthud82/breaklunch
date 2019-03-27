@@ -14,9 +14,15 @@ if ($whse == 3) {
 }
 
 $posttype = ($_POST['posttype']);
+if ($posttype == 'BREAK') {
+    $nvtype = 'J-715';
+} else {
+    $nvtype = 'J-730';
+}
+
 $datetime = date('Y-m-d h:i:s');
 
-$sql = "INSERT INTO printvis.breaklunch (bl_tsm, bl_whse, bl_datetime, bl_type) VALUES ($tsmnum, $whse, '$datetime', '$posttype');";
+$sql = "INSERT INTO printvis.breaklunch (bl_tsm, bl_whse, bl_datetime, bl_type, nv_type) VALUES ($tsmnum, $whse, '$datetime', '$posttype', '$nvtype');";
 $query = $conn1->prepare($sql);
 $query->execute();
 
