@@ -4,6 +4,7 @@
     <head>
         <title>Break/Lunch Kiosk</title>
         <?php include_once '../printvis/headerincludes.php'; ?>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 
     </head>
