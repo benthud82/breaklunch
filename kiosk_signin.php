@@ -22,7 +22,7 @@
                                 <h2 class="form-signin-heading text-center">Scan TSM#</h2>
                                 <div style="margin: 10px">
                                     <label for="username" class="sr-only">Scan TSM#</label>
-                                    <input type="text" id="tsmnum" name="tsmnum" class="form-control" placeholder="Enter TSM#" required="" autofocus="" autocomplete="off">
+                                    <input type="text" id="tsmnum" name="tsmnum" class="form-control" placeholder="Scan TSM#" required="" autofocus="" autocomplete="off" onPaste="var e=this; setTimeout(function(){verifytsm(e);}, 4);">
                                 </div>
                                 <!--                       //         <button class="btn btn-lg btn-primary btn-block" type="submit" id="verifytsm">Sign in</button>-->
                             </form>
@@ -71,8 +71,9 @@
         <script>
             $("body").tooltip({selector: '[data-toggle="tooltip"]'});
 
-            function verifytsm() {
-                var tsmnum = $('#tsmnum').val();
+            function verifytsm(e) {
+                debugger;
+                var tsmnum = e.value;
                 $.ajax({
                     data: {tsmnum: tsmnum},
                     url: 'post/verifytsm.php',
@@ -95,23 +96,6 @@
                     }
                 });
             }
-
-            //verify tsm and show break/lunch buttons if valid
-//            $(document).on("click touchstart", "#verifytsm", function (e) {
-//                e.preventDefault();
-//                verifytsm();
-//            });
-
-//            $("input").on("paste", function (e) {
-//                e.preventDefault();
-//                verifytsm();
-//            });
-
-            $("#tsmnum").bind('input', function (e) {
-                e.preventDefault();
-                verifytsm();
-            });
-
 
             //break or lunch button clicked
             $(document).on("click touchstart", ".click_breaklunch", function (e) {
