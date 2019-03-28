@@ -18,14 +18,14 @@
                 <div id="container_input">
                     <div class="row" style="padding-top: 75px;">
                         <div class="col-lg-2 col-md-4 col-sm-6 col-lg-offset-5 col-md-offset-4 col-sm-offset-3 ">
-                            <form class="form-signin" >
+                            <div class="form-signin" >
                                 <h2 class="form-signin-heading text-center">Scan TSM#</h2>
                                 <div style="margin: 10px">
                                     <label for="username" class="sr-only">Scan TSM#</label>
                                     <input type="text" id="tsmnum" name="tsmnum" class="form-control" placeholder="Scan TSM#" required="" autofocus="" autocomplete="off" onPaste="var e=this; setTimeout(function(){verifytsm(e);}, 4);">
                                 </div>
                                 <!--                       //         <button class="btn btn-lg btn-primary btn-block" type="submit" id="verifytsm">Sign in</button>-->
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div
@@ -72,8 +72,9 @@
             $("body").tooltip({selector: '[data-toggle="tooltip"]'});
 
             function verifytsm(e) {
-                e.preventDefault();
+               
                 var tsmnum = e.value;
+                
                 $.ajax({
                     data: {tsmnum: tsmnum},
                     url: 'post/verifytsm.php',
