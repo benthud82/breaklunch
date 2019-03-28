@@ -72,7 +72,7 @@
             $("body").tooltip({selector: '[data-toggle="tooltip"]'});
 
             function verifytsm(e) {
-                debugger;
+                e.preventDefault();
                 var tsmnum = e.value;
                 $.ajax({
                     data: {tsmnum: tsmnum},
