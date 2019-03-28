@@ -24,7 +24,7 @@
                                     <label for="username" class="sr-only">Enter TSM#</label>
                                     <input type="text" id="tsmnum" name="tsmnum" class="form-control" placeholder="Enter TSM#" required="" autofocus="" autocomplete="off">
                                 </div>
-                                <button class="btn btn-lg btn-primary btn-block" type="submit" id="verifytsm">Sign in</button>
+                               
                             </form>
                         </div>
                     </div>
