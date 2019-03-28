@@ -19,12 +19,12 @@
                     <div class="row" style="padding-top: 75px;">
                         <div class="col-lg-2 col-md-4 col-sm-6 col-lg-offset-5 col-md-offset-4 col-sm-offset-3 ">
                             <form class="form-signin" >
-                                <h2 class="form-signin-heading text-center">Enter TSM#</h2>
+                                <h2 class="form-signin-heading text-center">Scan TSM#</h2>
                                 <div style="margin: 10px">
-                                    <label for="username" class="sr-only">Enter TSM#</label>
+                                    <label for="username" class="sr-only">Scan TSM#</label>
                                     <input type="text" id="tsmnum" name="tsmnum" class="form-control" placeholder="Enter TSM#" required="" autofocus="" autocomplete="off">
                                 </div>
-                               
+                                <!--                       //         <button class="btn btn-lg btn-primary btn-block" type="submit" id="verifytsm">Sign in</button>-->
                             </form>
                         </div>
                     </div>
@@ -72,8 +72,6 @@
             $("body").tooltip({selector: '[data-toggle="tooltip"]'});
 
             function verifytsm() {
-
-
                 var tsmnum = $('#tsmnum').val();
                 $.ajax({
                     data: {tsmnum: tsmnum},
@@ -99,10 +97,21 @@
             }
 
             //verify tsm and show break/lunch buttons if valid
-            $(document).on("click touchstart", "#verifytsm", function (e) {
+//            $(document).on("click touchstart", "#verifytsm", function (e) {
+//                e.preventDefault();
+//                verifytsm();
+//            });
+
+//            $("input").on("paste", function (e) {
+//                e.preventDefault();
+//                verifytsm();
+//            });
+
+            $("#tsmnum").bind('input', function (e) {
                 e.preventDefault();
                 verifytsm();
             });
+
 
             //break or lunch button clicked
             $(document).on("click touchstart", ".click_breaklunch", function (e) {
