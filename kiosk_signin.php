@@ -5,7 +5,7 @@
         <title>Break/Lunch Kiosk</title>
         <?php include_once '../printvis/headerincludes.php'; ?>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
+        <script src="js/jquery.scannerdetection.js" type="text/javascript"></script>
 
     </head>
 
@@ -17,10 +17,10 @@
                 <!--Input Container-->
                 <div id="container_input">
                     <div class="row" style="padding-top: 75px;">
-                        <div class="col-lg-2 col-md-4 col-sm-6 col-lg-offset-5 col-md-offset-4 col-sm-offset-3 ">
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 col-lg-offset-5 col-md-offset-4 col-sm-offset-3 col-xs-offset-3 ">
                             <div class="form-signin" >
                                 <h2 class="form-signin-heading text-center">Scan TSM#</h2>
-                                <div style="margin: 10px">
+                                <div style="margin: 10px; ">
                                     <label for="username" class="sr-only">Scan TSM#</label>
                                     <input type="text" id="tsmnum" name="tsmnum" class="form-control" placeholder="Scan TSM#" required="" autofocus="" autocomplete="off" onPaste="var e=this; setTimeout(function(){verifytsm(e);}, 4);">
                                 </div>
@@ -29,7 +29,6 @@
                         </div>
                     </div>
                 </div
-
                 <!--Error Modal-->
 
                 <!--Break/Lunch Container-->
@@ -71,10 +70,10 @@
         <script>
             $("body").tooltip({selector: '[data-toggle="tooltip"]'});
 
-            function verifytsm(e) {
-               
-                var tsmnum = e.value;
-                
+            function verifytsm(barcode) {
+                debugger;
+                var tsmnum = barcode;
+
                 $.ajax({
                     data: {tsmnum: tsmnum},
                     url: 'post/verifytsm.php',
@@ -141,6 +140,23 @@
 
 
 
+        </script>
+        
+                <script type="text/javascript">
+            $(document).scannerDetection({
+                //https://github.com/kabachello/jQuery-Scanner-Detection
+                timeBeforeScanTest: 200, // wait for the next character for upto 200ms
+                avgTimeByChar: 40, // it's not a barcode if a character takes longer than 100ms
+                preventDefault: true,
+                endChar: [13],
+                onComplete: function (barcode, qty) {
+                    validScan = true;
+                    verifytsm(barcode);
+                },
+                onError: function (string, qty) {
+                    
+                }
+            });
         </script>
 
     </body>
