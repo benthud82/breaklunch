@@ -22,7 +22,7 @@
                                 <h2 class="form-signin-heading text-center">Scan TSM#</h2>
                                 <div style="margin: 10px; ">
                                     <label for="username" class="sr-only">Scan TSM#</label>
-                                    <input type="text" id="tsmnum" name="tsmnum" class="form-control" placeholder="Scan TSM#" required="" autofocus="" autocomplete="off" onPaste="var e=this; setTimeout(function(){verifytsm(e);}, 4);">
+                                    <input type="text" id="tsmnum" name="tsmnum" class="form-control" placeholder="Scan TSM#" required="" autofocus="" autocomplete="off" >
                                 </div>
                                 <!--                       //         <button class="btn btn-lg btn-primary btn-block" type="submit" id="verifytsm">Sign in</button>-->
                             </div>
@@ -141,8 +141,8 @@
 
 
         </script>
-        
-                <script type="text/javascript">
+
+        <script type="text/javascript">
             $(document).scannerDetection({
                 //https://github.com/kabachello/jQuery-Scanner-Detection
                 timeBeforeScanTest: 200, // wait for the next character for upto 200ms
@@ -150,11 +150,13 @@
                 preventDefault: true,
                 endChar: [13],
                 onComplete: function (barcode, qty) {
-                    validScan = true;
+                    debugger;
+                    var barcode = barcode;
+                    $('#tsmnum').val (barcode);
                     verifytsm(barcode);
                 },
                 onError: function (string, qty) {
-                    
+
                 }
             });
         </script>
