@@ -22,7 +22,7 @@
                                 <h2 class="form-signin-heading text-center">Scan TSM#</h2>
                                 <div style="margin: 10px; ">
                                     <label for="username" class="sr-only">Scan TSM#</label>
-                                    <input type="text" id="tsmnum" name="tsmnum" class="form-control" placeholder="Scan TSM#" required="" autofocus="" autocomplete="off" >
+                                    <input type="text" id="tsmnum" name="tsmnum" class="form-control" placeholder="Scan TSM#" required="" autofocus="" autocomplete="off" autofocus="autofocus">
                                 </div>
                                 <!--                       //         <button class="btn btn-lg btn-primary btn-block" type="submit" id="verifytsm">Sign in</button>-->
                             </div>
@@ -69,6 +69,9 @@
 
         <script>
             $("body").tooltip({selector: '[data-toggle="tooltip"]'});
+            $(function () {
+                $('[autofocus]:not(:focus)').eq(0).focus();
+            });
 
             function verifytsm(barcode) {
                 debugger;
@@ -152,7 +155,7 @@
                 onComplete: function (barcode, qty) {
                     debugger;
                     var barcode = barcode;
-                    $('#tsmnum').val (barcode);
+                    $('#tsmnum').val(barcode);
                     verifytsm(barcode);
                 },
                 onError: function (string, qty) {
