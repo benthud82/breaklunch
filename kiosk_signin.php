@@ -6,7 +6,7 @@
         <?php include_once '../printvis/headerincludes.php'; ?>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <script src="js/jquery.scannerdetection.js" type="text/javascript"></script>
-
+        <script src="js/jquery.scannerdetection.compatibility.js" type="text/javascript"></script>
     </head>
 
     <body style="">
