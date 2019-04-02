@@ -74,7 +74,6 @@
             });
 
             function verifytsm(barcode) {
-                debugger;
                 var tsmnum = barcode;
 
                 $.ajax({
@@ -153,7 +152,6 @@
                 preventDefault: true,
                 endChar: [13],
                 onComplete: function (barcode, qty) {
-                    debugger;
                     var barcode = barcode;
                     $('#tsmnum').val(barcode);
                     verifytsm(barcode);
