@@ -15,37 +15,39 @@ function _ftpupload($ftpfilename) {
         die('Connection attempt failed!');
     }
     $upload = ftp_put($connection, $dest, $source, FTP_ASCII);
-    if (!$upload) {
-        echo 'FTP upload failed!';
-    } else {
-        echo'FTP Succeeded!';
-    }
-    print_r(error_get_last());
+
     ftp_close($connection);
 }
 
+$whsearray = array(2, 3, 6, 7, 9);
 $ftpdate = date('Y-m-d');
-$sql_breaklunch = $conn1->prepare("SELECT 
+
+foreach ($whsearray as $whse) {
+
+
+    $sql_breaklunch = $conn1->prepare("SELECT 
                                                                         bl_tsm, bl_whse, bl_datetime, bl_type, nv_type
                                                                     FROM
                                                                         printvis.breaklunch
                                                                     WHERE
-                                                                        DATE(bl_datetime) = CURDATE();");
+                                                                        DATE(bl_datetime) = CURDATE()
+                                                                        and bl_whse = $whse;");
 
-$sql_breaklunch->execute();
-$breaklunch_array = $sql_breaklunch->fetchAll(pdo::FETCH_ASSOC);
-$numrows = count($breaklunch_array);
-if ($numrows > 0) {
-    $filename = "breaklunch" . "_" . $ftpdate . ".csv";
-    $fp = fopen("./exports/$filename", "w"); //open for write
-    $data = array();
+    $sql_breaklunch->execute();
+    $breaklunch_array = $sql_breaklunch->fetchAll(pdo::FETCH_ASSOC);
+    $numrows = count($breaklunch_array);
+    if ($numrows > 0) {
+        $filename = "breaklunch" . "_" . $whse . "_" . $ftpdate . ".csv";
+        $fp = fopen("./exports/$filename", "w"); //open for write
+        $data = array();
 
-    foreach ($breaklunch_array as $key => $value) {
-        //$data[] = $breaklunch_array[$key];
-        fputcsv($fp, $breaklunch_array[$key]);
-        //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
+        foreach ($breaklunch_array as $key => $value) {
+            //$data[] = $breaklunch_array[$key];
+            fputcsv($fp, $breaklunch_array[$key]);
+            //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
+        }
+
+        fclose($fp); //close connection
+        $sendftp = _ftpupload($filename); //upload to nextview
     }
-
-    fclose($fp); //close connection
-    $sendftp = _ftpupload($filename); //upload to nextview
 }
