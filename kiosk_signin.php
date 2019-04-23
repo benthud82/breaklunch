@@ -19,10 +19,10 @@
                     <div class="row" style="padding-top: 75px;">
                         <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 col-lg-offset-5 col-md-offset-4 col-sm-offset-3 col-xs-offset-3 ">
                             <div class="form-signin" >
-                                <h2 class="form-signin-heading text-center">Scan TSM#</h2>
+                                <h2 class="form-signin-heading text-center" style="font-weight: 900">Scan TSM#</h2>
                                 <div style="margin: 10px; ">
                                     <label for="username" class="sr-only">Scan TSM#</label>
-                                    <input type="text" id="tsmnum" name="tsmnum" class="form-control" placeholder="Scan TSM#" required="" autofocus="" autocomplete="off" autofocus="autofocus">
+                                    <input type="text" id="tsmnum" name="tsmnum" class="form-control" placeholder="Scan TSM#" required="" autofocus="" autocomplete="off" autofocus="autofocus" style="border: 2px solid #333;">
                                 </div>
                                 <!--                       //         <button class="btn btn-lg btn-primary btn-block" type="submit" id="verifytsm">Sign in</button>-->
                             </div>
@@ -36,8 +36,8 @@
                     <div class="row" style="padding-top: 75px;  margin: 0px; width: 100%; text-align: center;">
                         <!--<div class="col-lg-4 col-md-10 col-sm-10 col-xs-10 col-lg-offset-4 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 ">-->
                         <div class="col-xs-10 col-xs-offset-1 ">
-                            <button style="display: inline-block; width: 150px; margin: 20px;"  class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_break" data-whse="<?php echo $whse ?>" data-type="BREAK" >Break - 15 Min</button>
-                            <button style="display: inline-block; width: 150px; margin: 20px;" class="btn btn-lg btn-danger btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="LUNCH"  >Lunch - 30 Min</button>
+                            <button style="display: inline-block; width: 175px; height: 50px; margin: 20px; font-weight: 700;"  class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_break" data-whse="<?php echo $whse ?>" data-type="BREAK"  >Break - 15 Min</button>
+                            <button style="display: inline-block; width: 175px; height: 50px; margin: 20px; font-weight: 700;" class="btn btn-lg btn-danger btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="LUNCH"  >Lunch - 30 Min</button>
                         </div>
 
                     </div>
