@@ -24,6 +24,24 @@ $ftpdate = date('Y-m-d');
 
 foreach ($whsearray as $whse) {
 
+    switch ($whse) {
+        case 2:
+            $text = 'ININ';
+            break;
+        case 3:
+            $text = 'NVSP';
+            break;
+        case 6:
+            $text = 'PADE';
+            break;
+        case 7:
+            $text = 'TXGP';
+            break;
+        case 9:
+            $text = 'FLJA';
+            break;
+    }
+
 
     $sql_breaklunch = $conn1->prepare("SELECT 
                                                                         bl_tsm, bl_whse, bl_datetime, bl_type, nv_type
@@ -37,7 +55,7 @@ foreach ($whsearray as $whse) {
     $breaklunch_array = $sql_breaklunch->fetchAll(pdo::FETCH_ASSOC);
     $numrows = count($breaklunch_array);
     if ($numrows > 0) {
-        $filename = "breaklunch" . "_" . $whse . "_" . $ftpdate . ".csv";
+        $filename = $text . "_" . "breaklunch" . "_" . $whse . "_" . $ftpdate . ".csv";
         $fp = fopen("./exports/$filename", "w"); //open for write
         $data = array();
 
