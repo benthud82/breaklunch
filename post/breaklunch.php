@@ -20,7 +20,7 @@ if ($posttype == 'BREAK') {
     $nvtype = 'J-730';
 }
 
-$datetime = date('Y-m-d h:i:s');
+$datetime = date('Y-m-d H:i:s');
 
 $sql = "INSERT INTO printvis.breaklunch (bl_tsm, bl_whse, bl_datetime, bl_type, nv_type) VALUES ($tsmnum, $whse, '$datetime', '$posttype', '$nvtype');";
 $query = $conn1->prepare($sql);
