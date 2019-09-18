@@ -36,17 +36,17 @@
                     <div class="row" style="padding-top: 75px;  margin: 0px; width: 100%; text-align: center;">
                         <!--<div class="col-lg-4 col-md-10 col-sm-10 col-xs-10 col-lg-offset-4 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 ">-->
                         <div class="col-xs-10 col-xs-offset-1 ">
-                            <button style="display: inline-block; width: 195px; height: 100px; margin: 5px; font-weight: 900;font-size: 21px;"  class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_break" data-whse="<?php echo $whse ?>" data-type="COORD"  >Coordination</button>
-                            <button style="display: inline-block; width: 195px; height: 100px; margin: 5px; font-weight: 900;font-size: 21px;" class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="MEETING"  >Meeting</button>
-                            <button style="display: inline-block; width: 195px; height: 100px; margin: 5px; font-weight: 900;font-size: 21px;" class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="EOD"  >End Of Day</button>
+                            <button style="display: inline-block; width: 210px; height: 100px; margin: 5px; font-weight: 900;font-size: 23px;"  class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_break" data-whse="<?php echo $whse ?>" data-type="COORD"  >Coordination</button>
+                            <button style="display: inline-block; width: 210px; height: 100px; margin: 5px; font-weight: 900;font-size: 23px;" class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="MEETING"  >Meeting</button>
+                            <button style="display: inline-block; width: 210px; height: 100px; margin: 5px; font-weight: 900;font-size: 23px;" class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="EOD"  >End Of Day</button>
                         </div>
                     </div>
-                    <div class="row" style="padding-top: 20px;  margin: 0px; width: 100%; text-align: center;">
+                    <div class="row" style="padding-top: 75px;  margin: 0px; width: 100%; text-align: center;">
                         <!--<div class="col-lg-4 col-md-10 col-sm-10 col-xs-10 col-lg-offset-4 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 ">-->
                         <div class="col-xs-10 col-xs-offset-1 ">
-                            <button style="display: inline-block; width: 195px; height: 100px; margin: 5px; font-weight: 900;font-size: 21px;" class="btn btn-lg btn-danger btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="HOUSE"  >Housekeeping</button>
-                            <button style="display: inline-block; width: 195px; height: 100px; margin: 5px; font-weight: 900;font-size: 21px;" class="btn btn-lg btn-danger btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="SPILL"  >Spill</button>
-                            <button style="display: inline-block; width: 195px; height: 100px; margin: 5px; font-weight: 900;font-size: 21px;" class="btn btn-lg btn-danger btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="TRAIN"  >Training</button>
+                            <button style="display: inline-block; width: 210px; height: 100px; margin: 5px; font-weight: 900;font-size: 23px;" class="btn btn-lg btn-danger btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="HOUSE"  >Housekeeping</button>
+                            <button style="display: inline-block; width: 210px; height: 100px; margin: 5px; font-weight: 900;font-size: 23px;" class="btn btn-lg btn-danger btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="SPILL"  >Spill</button>
+                            <button style="display: inline-block; width: 210px; height: 100px; margin: 5px; font-weight: 900;font-size: 23px;" class="btn btn-lg btn-danger btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="TRAIN"  >Training</button>
                         </div>
 
                     </div>
@@ -165,8 +165,8 @@
         <script type="text/javascript">
             $(document).scannerDetection({
                 //https://github.com/kabachello/jQuery-Scanner-Detection
-                timeBeforeScanTest: 200, // wait for the next character for upto 200ms
-                avgTimeByChar: 40, // it's not a barcode if a character takes longer than 100ms
+                timeBeforeScanTest: 2000, // wait for the next character for upto 200ms
+                avgTimeByChar: 400, // it's not a barcode if a character takes longer than 100ms
                 preventDefault: true,
                 endChar: [13],
                 onComplete: function (barcode, qty) {
