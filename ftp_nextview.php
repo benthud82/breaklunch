@@ -64,8 +64,32 @@ foreach ($whsearray as $whse) {
             fputcsv($fp, $breaklunch_array[$key]);
             //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
         }
+    }
+    $sql_eod = $conn1->prepare("SELECT 
+                                                                        eod_tsm, eod_whse, eod_datetime, eod_type, nv_type
+                                                                    FROM
+                                                                        printvis.eod
+                                                                    WHERE
+                                                                        DATE(eod_datetime) = CURDATE()
+                                                                        and eod_whse = $whse;");
+
+    $sql_eod->execute();
+    $eod_array = $sql_eod->fetchAll(pdo::FETCH_ASSOC);
+    $numrows2 = count($eod_array);
+    if ($numrows2 > 0) {
+        $filename2 = $text . "_" . "eod" . "_" . $whse . "_" . $ftpdate . ".csv";
+        $fp2 = fopen("./exports/$filename2", "w"); //open for write
+        $data = array();
+
+        foreach ($eod_array as $key => $value) {
+            //$data[] = $breaklunch_array[$key];
+            fputcsv($fp2, $eod_array[$key]);
+            //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
+        }
 
         fclose($fp); //close connection
+        fclose($fp2); //close connection
         $sendftp = _ftpupload($filename); //upload to nextview
+        $sendftp2 = _ftpupload($filename2); //upload to nextview
     }
 }
