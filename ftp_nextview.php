@@ -64,6 +64,8 @@ foreach ($whsearray as $whse) {
             fputcsv($fp, $breaklunch_array[$key]);
             //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
         }
+        fclose($fp); //close connection
+        $sendftp = _ftpupload($filename); //upload to nextview
     }
     $sql_eod = $conn1->prepare("SELECT 
                                                                         eod_tsm, eod_whse, eod_datetime, eod_type, nv_type
@@ -86,10 +88,7 @@ foreach ($whsearray as $whse) {
             fputcsv($fp2, $eod_array[$key]);
             //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
         }
-
-        fclose($fp); //close connection
         fclose($fp2); //close connection
-        $sendftp = _ftpupload($filename); //upload to nextview
         $sendftp2 = _ftpupload($filename2); //upload to nextview
     }
 }
