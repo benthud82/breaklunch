@@ -1,6 +1,10 @@
+
 <?php
 
 include_once '../connections/conn_printvis.php';
+include_once '../globalincludes/voice_11.php';
+
+$today = date('Y-m-d');
 
 function _ftpupload($ftpfilename) {
     //* Transfer file to FTP server *//
@@ -91,4 +95,29 @@ foreach ($whsearray as $whse) {
         fclose($fp2); //close connection
         $sendftp2 = _ftpupload($filename2); //upload to nextview
     }
+}
+
+
+$sql_notlpack = $dbh->prepare("SELECT Pack.Badge_Num, Pack.Batch_Num, Pack.Cart_Num, Pack.CEErrors, Pack.DateCreated, Pack.DateTimeComplete, Pack.HelpPack, Pack.NPErrors, Pack.Pack_ID, Pack.WIErrors, Pack.WTErrors, Tote.ToteLocation, Tote.WCS_Num, Tote.WorkOrder_Num, Tote.Box_Num
+                                        FROM HenrySchein.dbo.Pack Pack, HenrySchein.dbo.Tote Tote
+                                        WHERE Pack.Batch_Num = Tote.Batch_Num and Pack.DateCreated >= '$today'
+                                        ");
+
+$sql_notlpack->execute();
+$array_notlpack = $sql_notlpack->fetchAll(pdo::FETCH_ASSOC);
+
+
+$numrows3 = count($array_notlpack);
+if ($numrows3 > 0) {
+    $filename3 = "NOTLPack_" . $ftpdate . ".csv";
+    $fp3 = fopen("./exports/$filename3", "w"); //open for write
+    $data = array();
+
+    foreach ($array_notlpack as $key => $value) {
+        //$data[] = $breaklunch_array[$key];
+        fputcsv($fp3, $array_notlpack[$key]);
+        //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
+    }
+    fclose($fp3); //close connection
+    $sendftp3 = _ftpupload($filename3); //upload to nextview
 }
