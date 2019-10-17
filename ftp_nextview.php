@@ -102,8 +102,8 @@ $sql_notlpack = $dbh->prepare("SELECT Pack.Badge_Num,
                                         Pack.Batch_Num, 
                                         Pack.Cart_Num, 
                                         Pack.CEErrors, 
-                                        convert(varchar(25), Pack.DateCreated, 120) AS Pack.DateCreated, 
-                                        convert(varchar(25), Pack.DateTimeComplete, 120) Pack.DateTimeComplete, 
+                                        FORMAT (Pack.DateCreated, 'yyyy-MM-dd hh:mm:ss') as pack_create, 
+                                        FORMAT (Pack.DateTimeComplete, 'yyyy-MM-dd hh:mm:ss') as pack_complete, 
                                         Pack.HelpPack, 
                                         Pack.NPErrors, 
                                         Pack.Pack_ID, 
@@ -116,6 +116,8 @@ $sql_notlpack = $dbh->prepare("SELECT Pack.Badge_Num,
                                         FROM HenrySchein.dbo.Pack Pack, HenrySchein.dbo.Tote Tote
                                         WHERE Pack.Batch_Num = Tote.Batch_Num and Pack.DateCreated >= '$today' and DateTimeComplete <> ' '
                                         ");
+
+
 
 $sql_notlpack->execute();
 $array_notlpack = $sql_notlpack->fetchAll(pdo::FETCH_ASSOC);
