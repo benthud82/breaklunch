@@ -98,7 +98,21 @@ foreach ($whsearray as $whse) {
 }
 
 
-$sql_notlpack = $dbh->prepare("SELECT Pack.Badge_Num, Pack.Batch_Num, Pack.Cart_Num, Pack.CEErrors, Pack.DateCreated, Pack.DateTimeComplete, Pack.HelpPack, Pack.NPErrors, Pack.Pack_ID, Pack.WIErrors, Pack.WTErrors, Tote.ToteLocation, Tote.WCS_Num, Tote.WorkOrder_Num, Tote.Box_Num
+$sql_notlpack = $dbh->prepare("SELECT Pack.Badge_Num, 
+                                        Pack.Batch_Num, 
+                                        Pack.Cart_Num, 
+                                        Pack.CEErrors, 
+                                        convert(varchar(25), Pack.DateCreated, 120) AS Pack.DateCreated, 
+                                        convert(varchar(25), Pack.DateTimeComplete, 120) Pack.DateTimeComplete, 
+                                        Pack.HelpPack, 
+                                        Pack.NPErrors, 
+                                        Pack.Pack_ID, 
+                                        Pack.WIErrors, 
+                                        Pack.WTErrors, 
+                                        Tote.ToteLocation, 
+                                        Tote.WCS_Num, 
+                                        Tote.WorkOrder_Num, 
+                                        Tote.Box_Num
                                         FROM HenrySchein.dbo.Pack Pack, HenrySchein.dbo.Tote Tote
                                         WHERE Pack.Batch_Num = Tote.Batch_Num and Pack.DateCreated >= '$today' and DateTimeComplete <> ' '
                                         ");
