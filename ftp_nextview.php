@@ -113,7 +113,7 @@ $sql_notlpack = $dbh->prepare("SELECT Pack.Badge_Num,
                                         Tote.WCS_Num, 
                                         Tote.WorkOrder_Num, 
                                         Tote.Box_Num,
-                                        115 as JobType
+                                        J-115 as JobType
                                         FROM HenrySchein.dbo.Pack Pack, HenrySchein.dbo.Tote Tote
                                         WHERE Pack.Batch_Num = Tote.Batch_Num and Pack.DateCreated >= '$today' and DateTimeComplete <> ' '
                                         ");
