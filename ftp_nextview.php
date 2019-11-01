@@ -118,6 +118,8 @@ $sql_notlpack = $dbh->prepare("SELECT Pack.Badge_Num,
                                         WHERE Pack.Batch_Num = Tote.Batch_Num and Pack.DateCreated >= '$today' and DateTimeComplete <> ' '
                                         ");
 
+
+
 $sql_notlpack->execute();
 $array_notlpack = $sql_notlpack->fetchAll(pdo::FETCH_ASSOC);
 
