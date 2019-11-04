@@ -23,7 +23,7 @@ function _ftpupload($ftpfilename) {
     ftp_close($connection);
 }
 
-$whsearray = array(2, 3, 6, 7, 9);
+$whsearray = array(2, 3, 6, 7, 9, 11);
 $ftpdate = date('Y-m-d');
 
 foreach ($whsearray as $whse) {
@@ -43,6 +43,9 @@ foreach ($whsearray as $whse) {
             break;
         case 9:
             $text = 'FLJA';
+            break;
+        case 11:
+            $text = 'NOTL';
             break;
     }
 
