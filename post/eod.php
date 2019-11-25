@@ -34,6 +34,9 @@ switch ($posttype) {
     case 'TRAIN':
         $nvtype = 'J-710';
         break;
+    case 'DRUG':
+        $nvtype = 'J-101';
+        break;
 
     default:
         break;

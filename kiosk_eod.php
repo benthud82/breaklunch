@@ -53,6 +53,7 @@
                     <div class="row" style="padding-top: 30px;  margin: 0px; width: 100%; text-align: center;">
                         <!--<div class="col-lg-4 col-md-10 col-sm-10 col-xs-10 col-lg-offset-4 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 ">-->
                         <div class="col-xs-10 col-xs-offset-1 ">
+                            <button style="display: inline-block; width: 210px; height: 100px; margin: 5px; font-weight: 900;font-size: 23px;" class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="DRUG"  >Drug Room</button>
                             <button style="display: inline-block; width: 210px; height: 100px; margin: 5px; font-weight: 900;font-size: 23px;" class="btn btn-lg btn-danger btn-block click_exit" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="EXIT"  >EXIT</button>
                         </div>
 
