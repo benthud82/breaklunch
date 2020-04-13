@@ -178,7 +178,7 @@ $sql_calgpack = $aseriesconn_can->prepare("SELECT A.PBWHSE AS 'WHSE',
                                         WHERE A.PBWHSE = $whse2
                                         and A.PBBXSZ <> 'CSE'
                                         and A.PBCART > 0
-                                        and convert(varchar(25), A.PBPTJD, 120) >='$today");
+                                        and convert(varchar(25), A.PBPTJD, 120) >='$today'");
 
 
 
@@ -224,7 +224,7 @@ $sql_calgpick = $aseriesconn_can->prepare("SELECT A.PBWHSE AS 'WHSE',
                                         WHERE A.PBWHSE = $whse2
                                         and A.PBBXSZ <> 'CSE'
                                         and A.PBCART > 0
-                                        and convert(varchar(25), A.PBPTJD, 120) >='$today");
+                                        and convert(varchar(25), A.PBPTJD, 120) >='$today'");
 
 
 
