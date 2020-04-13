@@ -25,7 +25,7 @@ function _ftpupload($ftpfilename) {
     ftp_close($connection);
 }
 
-$whsearray = array(2, 3, 6, 7, 9, 11, 12, 16);
+$whsearray = array(2, 3, 6, 7, 9, 11);
 $ftpdate = date('Y-m-d');
 
 foreach ($whsearray as $whse) {
@@ -49,13 +49,7 @@ foreach ($whsearray as $whse) {
         case 11:
             $text = 'NOTL';
             break;
-        case 12:
-            $text = 'VANC';
-            break;
-        case 16:
-            $text = 'CALG';
-            break;
-    }
+            }
 
 
     $sql_breaklunch = $conn1->prepare("SELECT 
@@ -149,9 +143,21 @@ if ($numrows3 > 0) {
     $sendftp3 = _ftpupload($filename3); //upload to nextview
 }
 
+$whsearray2 = array(12, 16);
+$ftpdate = date('Y-m-d');
 
+foreach ($whsearray2 as $whse2) {
+
+    switch ($whse) {
+        case 12:
+            $text = 'VANC';
+            break;
+        case 16:
+            $text = 'CALG';
+            break;
+                    }
         // Calgary Packing Data for PM
-$sql_calgpack = $dbh->prepare("SELECT A.PBWHSE AS 'WHSE', 
+$sql_calgpack = $aseriesconn_can->prepare("SELECT A.PBWHSE AS 'WHSE', 
                                         A.PBCART AS 'BATCH', 
                                         A.PBBIN AS 'TOTENUMBER'
                                         A.PBBXSZ AS 'BOXSIZE',
@@ -169,7 +175,7 @@ $sql_calgpack = $dbh->prepare("SELECT A.PBWHSE AS 'WHSE',
                                         
                                         FROM ARCPCORDTA.NOTWPB
                                         JOIN ARCPCORDTA.NOTWPD on PDWCS# = PBWCS# and PDWKNO = PBWKNO and PBBOX# = PDBOX# 
-                                        WHERE A.PBWHSE = 16
+                                        WHERE A.PBWHSE = $WHSE2
                                         and A.PBBXSZ <> 'CSE'
                                         and A.PBCART > 0
                                         and convert(varchar(25), A.PBPTJD, 120) >='$today");
@@ -182,7 +188,7 @@ $array_calgpack = $sql_calgpack->fetchAll(pdo::FETCH_ASSOC);
 
 $numrows5 = count($array_calgpack);
 if ($numrows5 > 0) {
-    $filename5 = "CALGPack_" . $ftpdate . ".csv";
+    $filename5 = $text . "_" . "Pack" . "_" . $whse2 . "_" . $ftpdate . ".csv";
     $fp5 = fopen("./exports/$filename5", "w"); //open for write
     $data = array();
 
@@ -197,7 +203,7 @@ if ($numrows5 > 0) {
 
 
 // Calgary Picking Data for PM
-$sql_calgpick = $dbh->prepare("SELECT A.PBWHSE AS 'WHSE', 
+$sql_calgpick = $aseriesconn_can->prepare("SELECT A.PBWHSE AS 'WHSE', 
                                         A.PBCART AS 'BATCH', 
                                         A.PBBIN AS 'TOTENUMBER'
                                         A.PBBXSZ AS 'BOXSIZE',
@@ -215,7 +221,7 @@ $sql_calgpick = $dbh->prepare("SELECT A.PBWHSE AS 'WHSE',
                                         
                                         FROM ARCPCORDTA.NOTWPB
                                         JOIN ARCPCORDTA.NOTWPD on PDWCS# = PBWCS# and PDWKNO = PBWKNO and PBBOX# = PDBOX# 
-                                        WHERE A.PBWHSE = 16
+                                        WHERE A.PBWHSE = $WHSE2
                                         and A.PBBXSZ <> 'CSE'
                                         and A.PBCART > 0
                                         and convert(varchar(25), A.PBPTJD, 120) >='$today");
@@ -228,7 +234,7 @@ $array_calgpick = $sql_calgpick->fetchAll(pdo::FETCH_ASSOC);
 
 $numrows6 = count($array_calgpick);
 if ($numrows6 > 0) {
-    $filenamel = "CALGPick_" . $ftpdate . ".csv";
+    $filename6 = $text . "_" . "Pick" . "_" . $whse2 . "_" . $ftpdate . ".csv";
     $fp6 = fopen("./exports/$filename6", "w"); //open for write
     $data = array();
 
@@ -240,94 +246,7 @@ if ($numrows6 > 0) {
     fclose($fp6); //close connection
     $sendftp6 = _ftpupload($filename6); //upload to nextview
 }
-
-            //Vancouver Packing Data for PM
-$sql_vancpack = $dbh->prepare("SELECT A.PBWHSE AS 'WHSE', 
-                                        A.PBCART AS 'BATCH', 
-                                        A.PBBIN AS 'TOTENUMBER'
-                                        A.PBBXSZ AS 'BOXSIZE',
-                                        B.PDITEM AS 'ITEM',
-                                        B.PDPKGU AS 'PKGU',
-                                        B.PDPCKQ AS 'QTY',
-                                        A.PBLOC# AS 'LOCATION',                                        
-                                        A.PBBOX# AS 'BOXNUMBER',
-                                        A.PBLP9D AS 'LICENSE',
-                                        A.PBSHPC AS 'TYPE',
-                                        A.PBWCS# AS 'WCSNUMBER',
-                                        A.PBWKNO AS 'WORKORDERNUMBER',
-                                        convert(varchar(25), A.PBPTJD, 120) AS 'PRINTDATE', 
-                                        'J-115' as JobType
-                                        
-                                        FROM ARCPCORDTA.NOTWPB
-                                        JOIN ARCPCORDTA.NOTWPD on PDWCS# = PBWCS# and PDWKNO = PBWKNO and PBBOX# = PDBOX# 
-                                        WHERE A.PBWHSE = 12
-                                        and A.PBBXSZ <> 'CSE'
-                                        and A.PBCART > 0
-                                        and convert(varchar(25), A.PBPTJD, 120) >='$today");
-
-
-
-$sql_vancpack->execute();
-$array_vancpack = $sql_vancpack->fetchAll(pdo::FETCH_ASSOC);
-
-
-$numrows4 = count($array_vancpack);
-if ($numrows4 > 0) {
-    $filename4 = "VANCPack_" . $ftpdate . ".csv";
-    $fp4 = fopen("./exports/$filename4", "w"); //open for write
-    $data = array();
-
-    foreach ($array_vancpack as $key => $value) {
-        //$data[] = $breaklunch_array[$key];
-        fputcsv($fp4, $array_vancpack[$key]);
-        //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
- }
-    fclose($fp4); //close connection
-    $sendftp4 = _ftpupload($filename4); //upload to nextview
-}
-
-
-//Vancouver Picking Data for PM
-$sql_vancpick = $dbh->prepare("SELECT A.PBWHSE AS 'WHSE', 
-                                        A.PBCART AS 'BATCH', 
-                                        A.PBBIN AS 'TOTENUMBER'
-                                        A.PBBXSZ AS 'BOXSIZE',
-                                        B.PDITEM AS 'ITEM',
-                                        B.PDPKGU AS 'PKGU',
-                                        B.PDPCKQ AS 'QTY',
-                                        A.PBLOC# AS 'LOCATION',                                        
-                                        A.PBBOX# AS 'BOXNUMBER',
-                                        A.PBLP9D AS 'LICENSE',
-                                        A.PBSHPC AS 'TYPE',
-                                        A.PBWCS# AS 'WCSNUMBER',
-                                        A.PBWKNO AS 'WORKORDERNUMBER',
-                                        convert(varchar(25), A.PBPTJD, 120) AS 'PRINTDATE', 
-                                        'J-136' as JobType
-                                        
-                                        FROM ARCPCORDTA.NOTWPB
-                                        JOIN ARCPCORDTA.NOTWPD on PDWCS# = PBWCS# and PDWKNO = PBWKNO and PBBOX# = PDBOX# 
-                                        WHERE A.PBWHSE = 12
-                                        and A.PBBXSZ <> 'CSE'
-                                        and A.PBCART > 0
-                                        and convert(varchar(25), A.PBPTJD, 120) >='$today");
-
-
-
-$sql_vancpick->execute();
-$array_vancpick = $sql_vancpick->fetchAll(pdo::FETCH_ASSOC);
-
-
-$numrows7 = count($array_vancpick);
-if ($numrows7 > 0) {
-    $filename7 = "VANCPick_" . $ftpdate . ".csv";
-    $fp7 = fopen("./exports/$filename7", "w"); //open for write
-    $data = array();
-
-    foreach ($array_vancpick as $key => $value) {
-        //$data[] = $breaklunch_array[$key];
-        fputcsv($fp7, $array_vancpick[$key]);
-        //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
- }
+ 
     fclose($fp7); //close connection
     $sendftp7 = _ftpupload($filename7); //upload to nextview 
 }
