@@ -159,7 +159,7 @@ foreach ($whsearray2 as $whse2) {
         // Calgary Packing Data for PM
 $sql_calgpack = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE, 
                                         A.PBCART AS BATCH, 
-                                        A.PBBIN AS TOTENUMBER,
+                                        A.PBBIN# AS TOTENUMBER,
                                         A.PBBXSZ AS BOXSIZE,
                                         B.PDITEM AS ITEM,
                                         B.PDPKGU AS PKGU,
@@ -170,7 +170,7 @@ $sql_calgpack = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE,
                                         A.PBSHPC AS TYPE,
                                         A.PBWCS# AS WCSNUMBER,
                                         A.PBWKNO AS WORKORDERNUMBER,
-                                        convert(varchar(25), A.PBPTJD, 120) AS PRINTDATE, 
+                                        CHAR(DATE('20'||DIGITS(A.PBPTJD))) AS PRINTDATE, 
                                         'J-115' as JobType
                                         
                                         FROM ARCPCORDTA.NOTWPB A
@@ -205,7 +205,7 @@ if ($numrows5 > 0) {
 // Calgary Picking Data for PM
 $sql_calgpick = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE, 
                                         A.PBCART AS BATCH, 
-                                        A.PBBIN AS TOTENUMBER,
+                                        A.PBBIN# AS TOTENUMBER,
                                         A.PBBXSZ AS BOXSIZE,
                                         B.PDITEM AS ITEM,
                                         B.PDPKGU AS PKGU,
@@ -216,7 +216,7 @@ $sql_calgpick = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE,
                                         A.PBSHPC AS TYPE,
                                         A.PBWCS# AS WCSNUMBER,
                                         A.PBWKNO AS WORKORDERNUMBER,
-                                        convert(varchar(25), A.PBPTJD, 120) AS PRINTDATE, 
+                                        CHAR(DATE('20'||DIGITS(A.PBPTJD))) AS PRINTDATE, 
                                         'J-136' as JobType
                                         
                                         FROM ARCPCORDTA.NOTWPB A
