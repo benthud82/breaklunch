@@ -159,7 +159,7 @@ foreach ($whsearray2 as $whse2) {
         // Calgary Packing Data for PM
 $sql_calgpack = $aseriesconn_can->prepare("SELECT A.PBWHSE AS 'WHSE', 
                                         A.PBCART AS 'BATCH', 
-                                        A.PBBIN AS 'TOTENUMBER'
+                                        A.PBBIN AS 'TOTENUMBER',
                                         A.PBBXSZ AS 'BOXSIZE',
                                         B.PDITEM AS 'ITEM',
                                         B.PDPKGU AS 'PKGU',
@@ -205,7 +205,7 @@ if ($numrows5 > 0) {
 // Calgary Picking Data for PM
 $sql_calgpick = $aseriesconn_can->prepare("SELECT A.PBWHSE AS 'WHSE', 
                                         A.PBCART AS 'BATCH', 
-                                        A.PBBIN AS 'TOTENUMBER'
+                                        A.PBBIN AS 'TOTENUMBER',
                                         A.PBBXSZ AS 'BOXSIZE',
                                         B.PDITEM AS 'ITEM',
                                         B.PDPKGU AS 'PKGU',
