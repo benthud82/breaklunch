@@ -157,20 +157,20 @@ foreach ($whsearray2 as $whse2) {
             break;
                     }
         // Calgary Packing Data for PM
-$sql_calgpack = $aseriesconn_can->prepare("SELECT A.PBWHSE AS 'WHSE', 
-                                        A.PBCART AS 'BATCH', 
-                                        A.PBBIN AS 'TOTENUMBER',
-                                        A.PBBXSZ AS 'BOXSIZE',
-                                        B.PDITEM AS 'ITEM',
-                                        B.PDPKGU AS 'PKGU',
-                                        B.PDPCKQ AS 'QTY',
-                                        A.PBLOC# AS 'LOCATION',                                        
-                                        A.PBBOX# AS 'BOXNUMBER',
-                                        A.PBLP9D AS 'LICENSE',
-                                        A.PBSHPC AS 'TYPE',
-                                        A.PBWCS# AS 'WCSNUMBER',
-                                        A.PBWKNO AS 'WORKORDERNUMBER',
-                                        convert(varchar(25), A.PBPTJD, 120) AS 'PRINTDATE', 
+$sql_calgpack = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE, 
+                                        A.PBCART AS BATCH, 
+                                        A.PBBIN AS TOTENUMBER,
+                                        A.PBBXSZ AS BOXSIZE,
+                                        B.PDITEM AS ITEM,
+                                        B.PDPKGU AS PKGU,
+                                        B.PDPCKQ AS QTY,
+                                        A.PBLOC# AS LOCATION,                                        
+                                        A.PBBOX# AS BOXNUMBER,
+                                        A.PBLP9D AS LICENSE,
+                                        A.PBSHPC AS TYPE,
+                                        A.PBWCS# AS WCSNUMBER,
+                                        A.PBWKNO AS WORKORDERNUMBER,
+                                        convert(varchar(25), A.PBPTJD, 120) AS PRINTDATE, 
                                         'J-115' as JobType
                                         
                                         FROM ARCPCORDTA.NOTWPB A
@@ -203,20 +203,20 @@ if ($numrows5 > 0) {
 
 
 // Calgary Picking Data for PM
-$sql_calgpick = $aseriesconn_can->prepare("SELECT A.PBWHSE AS 'WHSE', 
-                                        A.PBCART AS 'BATCH', 
-                                        A.PBBIN AS 'TOTENUMBER',
-                                        A.PBBXSZ AS 'BOXSIZE',
-                                        B.PDITEM AS 'ITEM',
-                                        B.PDPKGU AS 'PKGU',
-                                        B.PDPCKQ AS 'QTY',
-                                        A.PBLOC# AS 'LOCATION',                                        
-                                        A.PBBOX# AS 'BOXNUMBER',
-                                        A.PBLP9D AS 'LICENSE',
-                                        A.PBSHPC AS 'TYPE',
-                                        A.PBWCS# AS 'WCSNUMBER',
-                                        A.PBWKNO AS 'WORKORDERNUMBER',
-                                        convert(varchar(25), A.PBPTJD, 120) AS 'PRINTDATE', 
+$sql_calgpick = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE, 
+                                        A.PBCART AS BATCH, 
+                                        A.PBBIN AS TOTENUMBER,
+                                        A.PBBXSZ AS BOXSIZE,
+                                        B.PDITEM AS ITEM,
+                                        B.PDPKGU AS PKGU,
+                                        B.PDPCKQ AS QTY,
+                                        A.PBLOC# AS LOCATION,                                        
+                                        A.PBBOX# AS BOXNUMBER,
+                                        A.PBLP9D AS LICENSE,
+                                        A.PBSHPC AS TYPE,
+                                        A.PBWCS# AS WCSNUMBER,
+                                        A.PBWKNO AS WORKORDERNUMBER,
+                                        convert(varchar(25), A.PBPTJD, 120) AS PRINTDATE, 
                                         'J-136' as JobType
                                         
                                         FROM ARCPCORDTA.NOTWPB A
