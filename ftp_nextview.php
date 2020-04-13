@@ -173,12 +173,12 @@ $sql_calgpack = $aseriesconn_can->prepare("SELECT A.PBWHSE AS 'WHSE',
                                         convert(varchar(25), A.PBPTJD, 120) AS 'PRINTDATE', 
                                         'J-115' as JobType
                                         
-                                        FROM ARCPCORDTA.NOTWPB
-                                        JOIN ARCPCORDTA.NOTWPD on PDWCS# = PBWCS# and PDWKNO = PBWKNO and PBBOX# = PDBOX# 
+                                        FROM ARCPCORDTA.NOTWPB A
+                                        JOIN ARCPCORDTA.NOTWPD B on B.PDWCS# = A.PBWCS# and B.PDWKNO = A.PBWKNO and A.PBBOX# = B.PDBOX# 
                                         WHERE A.PBWHSE = $whse2
                                         and A.PBBXSZ <> 'CSE'
                                         and A.PBCART > 0
-                                        and convert(varchar(25), A.PBPTJD, 120) >='$today");
+                                        and convert(varchar(25), A.PBPTJD, 120) >='$today'");
 
 
 
@@ -219,12 +219,12 @@ $sql_calgpick = $aseriesconn_can->prepare("SELECT A.PBWHSE AS 'WHSE',
                                         convert(varchar(25), A.PBPTJD, 120) AS 'PRINTDATE', 
                                         'J-136' as JobType
                                         
-                                        FROM ARCPCORDTA.NOTWPB
-                                        JOIN ARCPCORDTA.NOTWPD on PDWCS# = PBWCS# and PDWKNO = PBWKNO and PBBOX# = PDBOX# 
+                                        FROM ARCPCORDTA.NOTWPB A
+                                        JOIN ARCPCORDTA.NOTWPD B on B.PDWCS# = A.PBWCS# and B.PDWKNO = A.PBWKNO and A.PBBOX# = B.PDBOX# 
                                         WHERE A.PBWHSE = $whse2
                                         and A.PBBXSZ <> 'CSE'
                                         and A.PBCART > 0
-                                        and convert(varchar(25), A.PBPTJD, 120) >='$today");
+                                        and convert(varchar(25), A.PBPTJD, 120) >='$today'");
 
 
 
