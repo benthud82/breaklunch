@@ -148,7 +148,7 @@ $ftpdate = date('Y-m-d');
 
 foreach ($whsearray2 as $whse2) {
 
-    switch ($whse) {
+    switch ($whse2) {
         case 12:
             $text = 'VANC';
             break;
