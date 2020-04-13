@@ -243,10 +243,8 @@ if ($numrows6 > 0) {
         fputcsv($fp6, $array_calgpick[$key]);
         //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
  }
+     
     fclose($fp6); //close connection
-    $sendftp6 = _ftpupload($filename6); //upload to nextview
+    $sendftp6 = _ftpupload($filename6); //upload to nextview 
 }
- 
-    fclose($fp7); //close connection
-    $sendftp7 = _ftpupload($filename7); //upload to nextview 
 }
