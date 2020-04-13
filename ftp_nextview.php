@@ -240,7 +240,7 @@ if ($numrows6 > 0) {
 
     foreach ($array_calgpick as $key => $value) {
         //$data[] = $breaklunch_array[$key];
-        fputcsv($fp5, $array_calgpick[$key]);
+        fputcsv($fp6, $array_calgpick[$key]);
         //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
  }
     fclose($fp6); //close connection
