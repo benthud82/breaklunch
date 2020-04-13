@@ -25,7 +25,7 @@ function _ftpupload($ftpfilename) {
     ftp_close($connection);
 }
 
-$whsearray = array(2, 3, 6, 7, 9, 11);
+$whsearray = array(2, 3, 6, 7, 9, 11, 12, 16);
 $ftpdate = date('Y-m-d');
 
 foreach ($whsearray as $whse) {
@@ -48,6 +48,12 @@ foreach ($whsearray as $whse) {
             break;
         case 11:
             $text = 'NOTL';
+            break;
+        case 12:
+            $text = 'VANC';
+            break;
+        case 16:
+            $text = 'CALG';
             break;
     }
 
@@ -323,5 +329,5 @@ if ($numrows7 > 0) {
         //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
  }
     fclose($fp7); //close connection
-    $sendftp7 = _ftpupload($filename7); //upload to nextview
+    $sendftp7 = _ftpupload($filename7); //upload to nextview 
 }
