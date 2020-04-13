@@ -175,7 +175,7 @@ $sql_calgpack = $aseriesconn_can->prepare("SELECT A.PBWHSE AS 'WHSE',
                                         
                                         FROM ARCPCORDTA.NOTWPB
                                         JOIN ARCPCORDTA.NOTWPD on PDWCS# = PBWCS# and PDWKNO = PBWKNO and PBBOX# = PDBOX# 
-                                        WHERE A.PBWHSE = $WHSE2
+                                        WHERE A.PBWHSE = $whse2
                                         and A.PBBXSZ <> 'CSE'
                                         and A.PBCART > 0
                                         and convert(varchar(25), A.PBPTJD, 120) >='$today");
@@ -221,7 +221,7 @@ $sql_calgpick = $aseriesconn_can->prepare("SELECT A.PBWHSE AS 'WHSE',
                                         
                                         FROM ARCPCORDTA.NOTWPB
                                         JOIN ARCPCORDTA.NOTWPD on PDWCS# = PBWCS# and PDWKNO = PBWKNO and PBBOX# = PDBOX# 
-                                        WHERE A.PBWHSE = $WHSE2
+                                        WHERE A.PBWHSE = $whse2
                                         and A.PBBXSZ <> 'CSE'
                                         and A.PBCART > 0
                                         and convert(varchar(25), A.PBPTJD, 120) >='$today");
