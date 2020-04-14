@@ -284,7 +284,7 @@ if ($numrows7 > 0) {
     $fp7 = fopen("./exports/$filename7", "w"); //open for write
     $data = array();
 
-    foreach ($array_calcase as $key => $value) {
+    foreach ($array_calgcase as $key => $value) {
         //$data[] = $breaklunch_array[$key];
         fputcsv($fp7, $array_calgcase[$key]);
         //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
