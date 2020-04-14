@@ -144,7 +144,7 @@ if ($numrows3 > 0) {
 }
 
 $whsearray2 = array(12, 16);
-$ftpdate = date('Y-m-d');
+$ftpdate1 = date('Y-m-d');
 
 foreach ($whsearray2 as $whse2) {
 
@@ -188,7 +188,7 @@ $array_calgpack = $sql_calgpack->fetchAll(pdo::FETCH_ASSOC);
 
 $numrows5 = count($array_calgpack);
 if ($numrows5 > 0) {
-    $filename5 = $text . "_" . "Pack" . "_" . $whse2 . "_" . $ftpdate . ".csv";
+    $filename5 = $text . "_" . "Pack" . "_" . $whse2 . "_" . $ftpdate1 . ".csv";
     $fp5 = fopen("./exports/$filename5", "w"); //open for write
     $data = array();
 
@@ -234,7 +234,7 @@ $array_calgpick = $sql_calgpick->fetchAll(pdo::FETCH_ASSOC);
 
 $numrows6 = count($array_calgpick);
 if ($numrows6 > 0) {
-    $filename6 = $text . "_" . "Pick" . "_" . $whse2 . "_" . $ftpdate . ".csv";
+    $filename6 = $text . "_" . "Pick" . "_" . $whse2 . "_" . $ftpdate1 . ".csv";
     $fp6 = fopen("./exports/$filename6", "w"); //open for write
     $data = array();
 
@@ -247,4 +247,51 @@ if ($numrows6 > 0) {
     fclose($fp6); //close connection
     $sendftp6 = _ftpupload($filename6); //upload to nextview 
 }
+
+
+// Calgary CasePicking Data for PM
+$sql_calgcase = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE, 
+                                        A.PBCART AS BATCH, 
+                                        A.PBBIN# AS TOTENUMBER,
+                                        A.PBBXSZ AS BOXSIZE,
+                                        B.PDITEM AS ITEM,
+                                        B.PDPKGU AS PKGU,
+                                        B.PDPCKQ AS QTY,
+                                        A.PBLOC# AS LOCATION,                                        
+                                        A.PBBOX# AS BOXNUMBER,
+                                        A.PBLP9D AS LICENSE,
+                                        A.PBSHPC AS TYPE,
+                                        A.PBWCS# AS WCSNUMBER,
+                                        A.PBWKNO AS WORKORDERNUMBER,
+                                        CHAR(DATE('20'||DIGITS(A.PBPTJD))) AS PRINTDATE
+                                                                                
+                                        FROM ARCPCORDTA.NOTWPB A
+                                        JOIN ARCPCORDTA.NOTWPD B on B.PDWCS# = A.PBWCS# and B.PDWKNO = A.PBWKNO and A.PBBOX# = B.PDBOX# 
+                                        WHERE A.PBWHSE = $whse2
+                                        and A.PBBXSZ = 'CSE'
+                                        and A.PBCART > 0
+                                        and CHAR(DATE('20'||DIGITS(A.PBPTJD))) >='$today'");
+
+
+
+$sql_calgcase->execute();
+$array_calgcase = $sql_calgcase->fetchAll(pdo::FETCH_ASSOC);
+
+
+$numrows7 = count($array_calgcase);
+if ($numrows7 > 0) {
+    $filename7 = $text . "_" . "Case" . "_" . $whse2 . "_" . $ftpdate1 . ".csv";
+    $fp7 = fopen("./exports/$filename7", "w"); //open for write
+    $data = array();
+
+    foreach ($array_calcase as $key => $value) {
+        //$data[] = $breaklunch_array[$key];
+        fputcsv($fp7, $array_calgcase[$key]);
+        //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
+ }
+     
+    fclose($fp7); //close connection
+    $sendftp7 = _ftpupload($filename7); //upload to nextview 
+
+    }
 }
