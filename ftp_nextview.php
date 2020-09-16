@@ -143,6 +143,53 @@ if ($numrows3 > 0) {
     $sendftp3 = _ftpupload($filename3); //upload to nextview
 }
 
+// NOTL CasePicking Data for PM
+$sql_NOTLcase = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE, 
+                                        A.PBCART AS BATCH, 
+                                        A.PBBIN# AS TOTENUMBER,
+                                        A.PBBXSZ AS BOXSIZE,
+                                        B.PDITEM AS ITEM,
+                                        B.PDPKGU AS PKGU,
+                                        B.PDPCKQ AS QTY,
+                                        A.PBLOC# AS LOCATION,                                        
+                                        A.PBBOX# AS BOXNUMBER,
+                                        A.PBLP9D AS LICENSE,
+                                        A.PBSHPC AS TYPE,
+                                        A.PBWCS# AS WCSNUMBER,
+                                        A.PBWKNO AS WORKORDERNUMBER,
+                                        CHAR(DATE('20'||DIGITS(A.PBPTJD))) AS PRINTDATE
+                                                                                
+                                        FROM ARCPCORDTA.NOTWPB A
+                                        JOIN ARCPCORDTA.NOTWPD B on B.PDWCS# = A.PBWCS# and B.PDWKNO = A.PBWKNO and A.PBBOX# = B.PDBOX# 
+                                        WHERE A.PBWHSE = 11
+                                        and A.PBBXSZ = 'CSE'
+                                        and A.PBCART > 0
+                                        and CHAR(DATE('20'||DIGITS(A.PBPTJD))) >='$today'");
+
+
+
+$sql_NOTLcase->execute();
+$array_NOTLcase = $sql_NOTLcase->fetchAll(pdo::FETCH_ASSOC);
+
+
+$numrows8 = count($array_NOTLcase);
+if ($numrows8 > 0) {
+    $filename8 = $text . "_" . "Case" . "_" . "NOTL" . "_" . $ftpdate1 . ".csv";
+    $fp8 = fopen("./exports/$filename8", "w"); //open for write
+    $data = array();
+
+    foreach ($array_NOTLcase as $key => $value) {
+        //$data[] = $breaklunch_array[$key];
+        fputcsv($fp8, $array_NOTLcase[$key]);
+        //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
+ }
+     
+    fclose($fp8); //close connection
+    $sendftp8 = _ftpupload($filename8); //upload to nextview 
+
+    }
+
+
 $whsearray2 = array(12, 16);
 $ftpdate1 = date('Y-m-d');
 
