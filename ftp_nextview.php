@@ -174,7 +174,7 @@ $array_NOTLcase = $sql_NOTLcase->fetchAll(pdo::FETCH_ASSOC);
 
 $numrows8 = count($array_NOTLcase);
 if ($numrows8 > 0) {
-    $filename8 = $text . "_" . "Case" . "_" . "NOTL" . "_" . $ftpdate1 . ".csv";
+    $filename8 = $text . "_" . "Case" . "_" . $ftpdate1 . ".csv";
     $fp8 = fopen("./exports/$filename8", "w"); //open for write
     $data = array();
 
