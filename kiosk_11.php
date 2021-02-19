@@ -7,4 +7,4 @@
 include_once '../connections/conn_printvis.php';
 
 $whse = 11;
-include 'kiosk_signin.php';
+include 'kiosk_signin_NOTL.php';
