@@ -6,6 +6,7 @@ include_once '../globalincludes/voice_11.php';
 
 
 $today = date('Y-m-d');
+$ftpdate = date('Y-m-d');
 
 function _ftpupload($ftpfilename) {
     //* Transfer file to FTP server *//
@@ -111,6 +112,53 @@ if ($numrows8 > 0) {
 
     }
 
+    
+    // NOTL Parts / nsi Data for PM
+$sql_NOTLparts = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE, 
+                                        A.PBCART AS BATCH, 
+                                        A.PBBIN# AS TOTENUMBER,
+                                        A.PBBXSZ AS BOXSIZE,
+                                        B.PDITEM AS ITEM,
+                                        B.PDPKGU AS PKGU,
+                                        B.PDPCKQ AS QTY,
+                                        A.PBLOC# AS LOCATION,                                        
+                                        A.PBBOX# AS BOXNUMBER,
+                                        A.PBLP9D AS LICENSE,
+                                        A.PBSHPC AS TYPE,
+                                        A.PBWCS# AS WCSNUMBER,
+                                        A.PBWKNO AS WORKORDERNUMBER,
+                                        CHAR(DATE('20'||DIGITS(A.PBPTJD))) AS PRINTDATE
+                                                                                
+                                        FROM ARCPCORDTA.NOTWPB A
+                                        JOIN ARCPCORDTA.NOTWPD B on B.PDWCS# = A.PBWCS# and B.PDWKNO = A.PBWKNO and A.PBBOX# = B.PDBOX# 
+                                        WHERE A.PBWHSE = 11
+                                        and A.PBCART > 0
+                                        and CHAR(DATE('20'||DIGITS(A.PBPTJD))) >='$today'");
+
+
+
+$sql_NOTLparts->execute();
+$array_NOTLparts = $sql_NOTLparts->fetchAll(pdo::FETCH_ASSOC);
+
+
+$numrows9 = count($array_NOTLparts);
+if ($numrows9 > 0) {
+    $filename9 = "NOTLParts_" . $ftpdate . ".csv";
+    $fp9 = fopen("./exports/$filename9", "w"); //open for write
+    $data = array();
+
+    foreach ($array_NOTLparts as $key => $value) {
+        //$data[] = $breaklunch_array[$key];
+        fputcsv($fp9, $array_NOTLparts[$key]);
+        //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
+ }
+     
+    fclose($fp9); //close connection
+    $sendftp9 = _ftpupload($filename9); //upload to nextview 
+
+    }
+    
+    
 
 $whsearray2 = array(12, 16);
 $ftpdate1 = date('Y-m-d');
