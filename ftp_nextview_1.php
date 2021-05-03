@@ -2,8 +2,8 @@
 <?php
 
 include_once '../connections/conn_printvis.php';
-include_once '../globalincludes/newcanada_asys.php';
-include_once '../globalincludes/voice_11.php';
+//include_once '../globalincludes/newcanada_asys.php';
+//include_once '../globalincludes/voice_11.php';
 
 
 $today = date('Y-m-d');
