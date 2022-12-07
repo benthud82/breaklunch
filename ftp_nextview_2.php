@@ -86,6 +86,7 @@ $sql_NOTLcase = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE,
                                         JOIN ARCPCORDTA.NOTWPD B on B.PDWCS# = A.PBWCS# and B.PDWKNO = A.PBWKNO and A.PBBOX# = B.PDBOX# 
                                         WHERE A.PBWHSE = 11
                                         and A.PBBXSZ = 'CSE'
+                                        and B.PDLOC# not like ('%MSDS%')
                                         and A.PBCART > 0
                                         and CHAR(DATE('20'||DIGITS(A.PBPTJD))) >='$today'");
 
@@ -132,6 +133,7 @@ $sql_NOTLparts = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE,
                                         FROM ARCPCORDTA.NOTWPB A
                                         JOIN ARCPCORDTA.NOTWPD B on B.PDWCS# = A.PBWCS# and B.PDWKNO = A.PBWKNO and A.PBBOX# = B.PDBOX# 
                                         WHERE A.PBWHSE = 11
+                                         and B.PDLOC# not like ('%MSDS%')
                                         and A.PBCART > 0
                                         and CHAR(DATE('20'||DIGITS(A.PBPTJD))) >='$today'");
 
@@ -193,6 +195,7 @@ $sql_calgpack = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE,
                                         FROM ARCPCORDTA.NOTWPB A
                                         JOIN ARCPCORDTA.NOTWPD B on B.PDWCS# = A.PBWCS# and B.PDWKNO = A.PBWKNO and A.PBBOX# = B.PDBOX# 
                                         WHERE A.PBWHSE = $whse2
+                                             and B.PDLOC# not like ('%MSDS%')
                                         and A.PBBXSZ <> 'CSE'
                                         and A.PBCART > 0
                                         and CHAR(DATE('20'||DIGITS(A.PBPTJD))) >='$today'");
@@ -239,6 +242,7 @@ $sql_calgpick = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE,
                                         FROM ARCPCORDTA.NOTWPB A
                                         JOIN ARCPCORDTA.NOTWPD B on B.PDWCS# = A.PBWCS# and B.PDWKNO = A.PBWKNO and A.PBBOX# = B.PDBOX# 
                                         WHERE A.PBWHSE = $whse2
+                                             and B.PDLOC# not like ('%MSDS%')
                                         and A.PBBXSZ <> 'CSE'
                                         and A.PBCART > 0
                                         and CHAR(DATE('20'||DIGITS(A.PBPTJD))) >='$today'");
@@ -285,6 +289,7 @@ $sql_calgcase = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE,
                                         FROM ARCPCORDTA.NOTWPB A
                                         JOIN ARCPCORDTA.NOTWPD B on B.PDWCS# = A.PBWCS# and B.PDWKNO = A.PBWKNO and A.PBBOX# = B.PDBOX# 
                                         WHERE A.PBWHSE = $whse2
+                                             and B.PDLOC# not like ('%MSDS%')
                                         and A.PBBXSZ = 'CSE'
                                         and A.PBCART > 0
                                         and CHAR(DATE('20'||DIGITS(A.PBPTJD))) >='$today'");
