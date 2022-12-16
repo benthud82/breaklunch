@@ -189,6 +189,7 @@ $sql_calgpack = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE,
                                         A.PBSHPC AS TYPE,
                                         A.PBWCS# AS WCSNUMBER,
                                         A.PBWKNO AS WORKORDERNUMBER,
+                                        A.PBHAZF as HAZARD,
                                         CHAR(DATE('20'||DIGITS(A.PBPTJD))) AS PRINTDATE, 
                                         'J-115' as JobType
                                         
