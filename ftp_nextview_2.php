@@ -27,7 +27,7 @@ function _ftpupload($ftpfilename) {
 
 
 $sql_notlpack = $dbh->prepare("SELECT Pack.Badge_Num, 
-                                        Pack.Batch_Num, 
+                                        RIGHT(REPLICATE('0', 5) + Pack.Batch_Num, 5) as Batch_Num, 
                                         Pack.Cart_Num, 
                                         Pack.CEErrors, 
                                         convert(varchar(25), Pack.DateCreated, 120) AS START, 
@@ -68,7 +68,7 @@ if ($numrows3 > 0) {
 
 // NOTL CasePicking Data for PM
 $sql_NOTLcase = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE, 
-                                        A.PBCART AS BATCH, 
+                                        LPAD(A.PBCART, 5, '0') AS BATCH, 
                                         A.PBBIN# AS TOTENUMBER,
                                         A.PBBXSZ AS BOXSIZE,
                                         B.PDITEM AS ITEM,
@@ -116,7 +116,7 @@ if ($numrows8 > 0) {
     
     // NOTL Parts / nsi Data for PM
 $sql_NOTLparts = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE, 
-                                        A.PBCART AS BATCH, 
+                                        LPAD(A.PBCART, 5, '0') as BATCH, 
                                         A.PBBIN# AS TOTENUMBER,
                                         A.PBBXSZ AS BOXSIZE,
                                         B.PDITEM AS ITEM,
@@ -177,7 +177,7 @@ foreach ($whsearray2 as $whse2) {
                     }
         // Calgary Packing Data for PM
 $sql_calgpack = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE, 
-                                        A.PBCART AS BATCH, 
+                                        LPAD(A.PBCART, 5, '0') AS BATCH, 
                                         A.PBBIN# AS TOTENUMBER,
                                         A.PBBXSZ AS BOXSIZE,
                                         B.PDITEM AS ITEM,
@@ -225,7 +225,7 @@ if ($numrows5 > 0) {
 
 // Calgary Picking Data for PM
 $sql_calgpick = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE, 
-                                        A.PBCART AS BATCH, 
+                                        LPAD(A.PBCART, 5, '0') AS BATCH, 
                                         A.PBBIN# AS TOTENUMBER,
                                         A.PBBXSZ AS BOXSIZE,
                                         B.PDITEM AS ITEM,
@@ -273,7 +273,7 @@ if ($numrows6 > 0) {
 
 // Calgary CasePicking Data for PM
 $sql_calgcase = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE, 
-                                        A.PBCART AS BATCH, 
+                                        LPAD(A.PBCART, 5, '0') AS BATCH, 
                                         A.PBBIN# AS TOTENUMBER,
                                         A.PBBXSZ AS BOXSIZE,
                                         B.PDITEM AS ITEM,
