@@ -162,7 +162,7 @@ if ($numrows9 > 0) {
     
     
 
-$whsearray2 = array(12, 16);
+$whsearray2 = array(16);
 $ftpdate1 = date('Y-m-d');
 
 foreach ($whsearray2 as $whse2) {
