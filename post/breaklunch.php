@@ -1,4 +1,3 @@
-
 <?php
 
 include_once '../../connections/conn_printvis.php';
@@ -15,9 +14,11 @@ if ($whse == 3) {
 
 $posttype = ($_POST['posttype']);
 if ($posttype == 'BREAK') {
-    $nvtype = 'J-715';
+    $nvtype = 'PCKBRK';
+} elseif ($posttype == 'SHUTTLE') {
+    $nvtype = 'PCKSHU';
 } else {
-    $nvtype = 'J-730';
+    $nvtype = 'PCKLUN';
 }
 
 $datetime = date('Y-m-d H:i:s');

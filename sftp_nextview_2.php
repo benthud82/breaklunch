@@ -3,6 +3,8 @@
 include_once '../connections/conn_printvis.php';
 include_once '../globalincludes/newcanada_asys.php';
 include_once '../globalincludes/voice_11.php';
+include_once 'Net/SFTP.php';
+
 
 
 $today = date('Y-m-d');
@@ -12,21 +14,24 @@ $ftpdate1 = date('Y-m-d');
 
 
 
-function _ftpupload($ftpfilename) {
+function _ftpupload($filename) {
     //* Transfer file to FTP server *//
-    $server = "172.16.1.203";
-    $ftp_user_name = "nextview";
-    $ftp_user_pass = "NextView9";
-    $dest = "$ftpfilename";
-    $source = "./exports/$ftpfilename";
-    $connection = ftp_connect($server);
-    $login = ftp_login($connection, $ftp_user_name, $ftp_user_pass);
-    if (!$connection || !$login) {
-        die('Connection attempt failed!');
-    }
-    $upload = ftp_put($connection, $dest, $source, FTP_ASCII);
+    $dest = "$filename";
+    $source = "./exports/$filename";
+    
+    $sftp = new Net_SFTP('sf.henryschein.com');
 
-    ftp_close($connection);
+    if (!$sftp->login('Hsinextview', 'EballMM15!')) {
+
+        exit('Login Failed');
+
+    }
+
+    //     $sftp->put('destfile', 'srcfile', NET_SFTP_LOCAL_FILE);
+
+    $sftp->put($dest, $source, NET_SFTP_LOCAL_FILE);
+
+    $sftp->disconnect();
 }
 
 

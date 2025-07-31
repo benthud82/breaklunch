@@ -3,30 +3,35 @@
 include_once '../connections/conn_printvis.php';
 include_once '../globalincludes/newcanada_asys.php';
 include_once '../globalincludes/voice_11.php';
+include_once('Net/SFTP.php');
 
 
-$today = date('Y-m-d');
-$ftpdate = date('Y-m-d');
-
-$ftpdate1 = date('Y-m-d');
+$today = '2024-08-21';
+$ftpdate = '2024-08-21';
 
 
+$ftpdate1 = '2024-08-21';
 
-function _ftpupload($ftpfilename) {
-    //* Transfer file to FTP server *//
-    $server = "172.16.1.203";
-    $ftp_user_name = "nextview";
-    $ftp_user_pass = "NextView9";
-    $dest = "$ftpfilename";
-    $source = "./exports/$ftpfilename";
-    $connection = ftp_connect($server);
-    $login = ftp_login($connection, $ftp_user_name, $ftp_user_pass);
-    if (!$connection || !$login) {
-        die('Connection attempt failed!');
+function _ftpupload($filename)
+{
+    $dest = "$filename";
+    $source = "./exports/$filename";
+    
+
+    $sftp = new Net_SFTP('sf.henryschein.com');
+
+    if (!$sftp->login('Hsinextview', 'EballMM15!')) {
+
+        exit('Login Failed');
+
     }
-    $upload = ftp_put($connection, $dest, $source, FTP_ASCII);
 
-    ftp_close($connection);
+    //     $sftp->put('destfile', 'srcfile', NET_SFTP_LOCAL_FILE);
+
+    $sftp->put($dest, $source, NET_SFTP_LOCAL_FILE);
+
+    $sftp->disconnect();
+
 }
 
 
@@ -167,7 +172,7 @@ if ($numrows9 > 0) {
     
 
 $whsearray2 = array(16);
-$ftpdate1 = date('Y-m-d');
+$ftpdate = date('Y-m-d');
 
 foreach ($whsearray2 as $whse2) {
 

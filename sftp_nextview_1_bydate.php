@@ -1,31 +1,40 @@
+
 <?php
 
-// Include the database connection file
 include_once '../connections/conn_printvis.php';
-include_once '../globalincludes/usa_asys.php';
+//include_once '../globalincludes/newcanada_asys.php';
 //include_once '../globalincludes/voice_11.php';
+include_once '../globalincludes/usa_asys.php';
+include_once('Net/SFTP.php');
 
-// Get today's date in 'Y-m-d' format
+
 $today = date('Y-m-d');
 $ftpdate = date('Y-m-d');
 
-// Function to upload a file to the FTP server
-function _ftpupload($ftpfilename)
-{
-    //* Transfer file to FTP server *//		
-    $server = "172.16.1.203"; // FTP server address
-    $ftp_user_name = "nextview"; // FTP username
-    $ftp_user_pass = "NextView9"; // FTP password
-    $dest = "$ftpfilename"; // Destination filename on the FTP server
-    $source = "./exports/$ftpfilename"; // Source file path on the local server
-    $connection = ftp_connect($server); // Establish FTP connection
-    $login = ftp_login($connection, $ftp_user_name, $ftp_user_pass); // Login to FTP server
-    if (!$connection || !$login) {
-        echo 'Connection attempt failed!'; // Output error message if connection or login fails
-    }
-    $upload = ftp_put($connection, $dest, $source, FTP_ASCII); // Upload the file to the FTP server
+$today = '2024-08-21';
+$ftpdate = '2024-08-21';
 
-    ftp_close($connection); // Close the FTP connection
+// Function to upload a file to the FTP server
+function _ftpupload($filename)
+{
+    $dest = "$filename";
+    $source = "./exports/$filename";
+    
+
+    $sftp = new Net_SFTP('sf.henryschein.com');
+
+    if (!$sftp->login('Hsinextview', 'EballMM15!')) {
+
+        exit('Login Failed');
+
+    }
+
+    //     $sftp->put('destfile', 'srcfile', NET_SFTP_LOCAL_FILE);
+
+    $sftp->put($dest, $source, NET_SFTP_LOCAL_FILE);
+
+    $sftp->disconnect();
+
 }
 
 // Array of warehouse IDs
@@ -105,7 +114,7 @@ foreach ($whsearray as $whse) {
     $sql_eod->execute(); // Execute the query
     $eod_array = $sql_eod->fetchAll(pdo::FETCH_ASSOC); // Fetch all results as an associative array
     $numrows2 = count($eod_array); // Count the number of rows returned
-    if ($numrows2 > 0) {
+    if ($numrows2 > 0) {    
         // Create a filename for the CSV file
         $filename2 = $text . "_" . "eod" . "_" . $whse . "_" . $ftpdate . ".csv";
         $fp2 = fopen("./exports/$filename2", "w"); // Open the file for writing
@@ -120,51 +129,52 @@ foreach ($whsearray as $whse) {
     }
 
 
-    //zone 4 extract
-    $sql_zone4 = $as400_conn->prepare("SELECT
-                                            MCWHSE,
-                                            MCLIC7,
-                                            MCCART,
-                                            MCSHPC,
-                                            MCSHPZ,
-                                            MCITEM,
-                                            SUBSTRING(MCTLOC, 1, 6) AS MCTLOC,
-                                            MCPCKS,
-                                            SUBSTRING(MCPLOC, 1, 6) AS MCPLOC,
-                                            MCSTAT,
-                                            MCRCDT,
-                                            MCRCHM,
-                                            MCSLDT,
-                                            MCSLHM,
-                                            MCSLEM,
-                                            MCRLDT,
-                                            MCRLHM,
-                                            MCRLEM
-                                        FROM
-                                            HSIPCORDTA.NOTSMC01
-                                        WHERE
-                                            MCWHSE = $whse AND 
-                                            MCCART <> 0 AND
-                                            MCRCDT = $current_date1YYMMDD
-					ORDER BY MCCART ASC, SUBSTRING(MCTLOC, 1, 6) ASC");
+    // //zone 4 extract
+    // $sql_zone4 = $as400_conn->prepare("SELECT
+    //                                         MCWHSE,
+    //                                         MCLIC7,
+    //                                         MCCART,
+    //                                         MCSHPC,
+    //                                         MCSHPZ,
+    //                                         MCITEM,
+    //                                         SUBSTRING(MCTLOC, 1, 6) AS MCTLOC,
+    //                                         MCPCKS,
+    //                                         SUBSTRING(MCPLOC, 1, 6) AS MCPLOC,
+    //                                         MCSTAT,
+    //                                         MCRCDT,
+    //                                         MCRCHM,
+    //                                         MCSLDT,
+    //                                         MCSLHM,
+    //                                         MCSLEM,
+    //                                         MCRLDT,
+    //                                         MCRLHM,
+    //                                         MCRLEM
+    //                                     FROM
+    //                                         HSIPCORDTA.NOTSMC01
+    //                                     WHERE
+    //                                         MCWHSE = $whse AND 
+    //                                         MCCART <> 0 AND
+    //                                         MCRCDT = $current_date1YYMMDD
+	// 				ORDER BY MCCART ASC, SUBSTRING(MCTLOC, 1, 6) ASC");
+					
 
-    $sql_zone4->execute(); // Execute the query
-    $zone4_array = $sql_zone4->fetchAll(pdo::FETCH_ASSOC); // Fetch all results as an associative array
+    // $sql_zone4->execute(); // Execute the query
+    // $zone4_array = $sql_zone4->fetchAll(pdo::FETCH_ASSOC); // Fetch all results as an associative array
 
-    $numrows3 = count($zone4_array); // Count the number of rows returned
-    if ($numrows3 > 0) {
-        // Create a filename for the CSV file
-        $filename3 = $text . "_" . "SlowMovingReplens" . "_" . $ftpdate . ".csv";
-        $fp3 = fopen("./exports/$filename3", "w"); // Open the file for writing
-        $data = array();
+    // $numrows3 = count($zone4_array); // Count the number of rows returned
+    // if ($numrows3 > 0) {
+    //     // Create a filename for the CSV file
+    //     $filename3 = $text . "_" . "SlowMovingReplens" . "_" . $ftpdate . ".csv";
+    //     $fp3 = fopen("./exports/$filename3", "w"); // Open the file for writing
+    //     $data = array();
 
-        // Write each row of data to the CSV file
-        foreach ($zone4_array as $key => $value) {
-            fputcsv($fp3, $zone4_array[$key]);
-        }
-        fclose($fp3); // Close the file
-        $sendftp3 = _ftpupload($filename3); // Upload the file to the FTP server
-    }
+    //     // Write each row of data to the CSV file
+    //     foreach ($zone4_array as $key => $value) {
+    //         fputcsv($fp3, $zone4_array[$key]);
+    //     }
+    //     fclose($fp3); // Close the file
+    //     $sendftp3 = _ftpupload($filename3); // Upload the file to the FTP server
+    // }
 
 
 
@@ -187,6 +197,7 @@ foreach ($whsearray as $whse) {
                                         ASSIGNED_TO1,
                                         ASSIGNED_TO2,
                                         BOX_LOCATION,
+                                        FUTURE_USE_3,
                                         STATUS      ,
                                         TIMESTAMP_A ,
                                         TIMESTAMP_P ,

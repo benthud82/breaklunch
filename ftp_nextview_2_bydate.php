@@ -5,12 +5,12 @@ include_once '../globalincludes/newcanada_asys.php';
 include_once '../globalincludes/voice_11.php';
 
 
-$today = date('Y-m-d');
-$ftpdate = date('Y-m-d');
 
-$ftpdate1 = date('Y-m-d');
+$today = '2024-08-21';
+$ftpdate = '2024-08-21';
 
 
+$ftpdate1 = '2024-08-21';
 
 function _ftpupload($ftpfilename) {
     //* Transfer file to FTP server *//
@@ -167,7 +167,7 @@ if ($numrows9 > 0) {
     
 
 $whsearray2 = array(16);
-$ftpdate1 = date('Y-m-d');
+$ftpdate = date('Y-m-d');
 
 foreach ($whsearray2 as $whse2) {
 

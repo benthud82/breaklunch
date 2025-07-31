@@ -1,3 +1,7 @@
+<?php
+// session_start(); // Removed to avoid duplicate session_start warning
+$whse = isset($_SESSION['whse']) ? $_SESSION['whse'] : null;
+?>
 <!DOCTYPE html>
 <html>
 
@@ -38,6 +42,12 @@
                         <div class="col-xs-10 col-xs-offset-1 ">
                             <button style="display: inline-block; width: 275px; height: 100px; margin: 20px; font-weight: 900;font-size: 29px;"  class="btn btn-lg btn-primary btn-block click_breaklunch" type="submit" id="click_break" data-whse="<?php echo $whse ?>" data-type="BREAK"  >Break - 15 Min</button>
                             <button style="display: inline-block; width: 275px; height: 100px; margin: 20px; font-weight: 900;font-size: 29px;" class="btn btn-lg btn-danger btn-block click_breaklunch" type="submit" id="click_lunch" data-whse="<?php echo $whse ?>" data-type="LUNCH"  >Lunch - 30 Min</button>
+                            <!-- Shuttle Button Below, only if $whse == 3 -->
+                            <?php if ($whse == 3): ?>
+                            <div style="width: 100%; text-align: center;">
+                                <button style="display: inline-block; width: 275px; height: 100px; margin: 20px auto 0 auto; font-weight: 900; font-size: 29px; background-color: #28a745; color: #fff; border: none;" class="btn btn-lg btn-block" type="button" id="click_shuttle">Shuttle</button>
+                            </div>
+                            <?php endif; ?>
                         </div>
 
                     </div>
@@ -120,6 +130,24 @@
 
             });
 
+            // Shuttle button clicked
+            $(document).on("click touchstart", "#click_shuttle", function (e) {
+                e.preventDefault();
+                var whse = $("#click_break").attr('data-whse'); // Use same whse as other buttons
+                var tsmnum = $('#tsmnum').val();
+                var posttype = 'SHUTTLE';
+                $.ajax({
+                    data: {tsmnum: tsmnum, whse: whse, posttype: posttype},
+                    url: 'post/breaklunch.php',
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function () {
+                        clear_tsm_num();
+                        show_input_container();
+                        hide_breaklunch_container();
+                    }
+                });
+            });
 
             function showerrormodal() {
                 $('#modal_tsm_num_error').modal('toggle');
@@ -161,6 +189,19 @@
 
                 }
             });
+        </script>
+
+        <script>
+        // TEMPORARY: Allow manual entry for testing without scanner
+        $(document).ready(function() {
+            $('#tsmnum').on('keypress', function(e) {
+                if (e.which === 13) { // Enter key
+                    var barcode = $(this).val();
+                    verifytsm(barcode);
+                }
+            });
+        });
+        // END TEMPORARY
         </script>
 
     </body>

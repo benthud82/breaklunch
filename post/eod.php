@@ -17,31 +17,30 @@ $posttype = ($_POST['posttype']);
 
 switch ($posttype) {
     case 'COORD':
-        $nvtype = 'J-705';
+        $nvtype = 'PCKCOR';
         break;
     case 'MEETING':
-        $nvtype = 'J-720';
+        $nvtype = 'PCKMET';
         break;
     case 'EOD':
-        $nvtype = 'J-725';
+        $nvtype = 'PCKEOD';
         break;
     case 'HOUSE':
-        $nvtype = 'J-735';
+        $nvtype = 'PCKHKP';
         break;
     case 'SPILL':
-        $nvtype = 'J-700';
+        $nvtype = 'PCKSPL';
         break;
     case 'TRAIN':
-        $nvtype = 'J-710';
+        $nvtype = 'PCKTRN';
         break;
     case 'DRUG':
-        $nvtype = 'J-101';
+        $nvtype = 'PCKDRG';
         break;
 
     default:
         break;
 }
-
 $datetime = date('Y-m-d H:i:s');
 
 $sql = "INSERT INTO printvis.eod (eod_tsm, eod_whse, eod_datetime, eod_type, nv_type) VALUES ($tsmnum, $whse, '$datetime', '$posttype', '$nvtype');";

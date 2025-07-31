@@ -163,7 +163,18 @@
                 }
             });
         </script>
-
+        <script>
+        // TEMPORARY: Allow manual entry for testing without scanner
+        $(document).ready(function() {
+            $('#tsmnum').on('keypress', function(e) {
+                if (e.which === 13) { // Enter key
+                    var barcode = $(this).val();
+                    verifytsm(barcode);
+                }
+            });
+        });
+        // END TEMPORARY
+        </script>
     </body>
 </html>
 

@@ -6,5 +6,6 @@
 <?php
 include_once '../connections/conn_printvis.php';
 
+$_SESSION['whse'] = 2;
 $whse = 2;
 include 'kiosk_signin.php';
