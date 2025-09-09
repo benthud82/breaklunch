@@ -62,6 +62,7 @@ print_r($array_notlpack);
 
 $numrows3 = count($array_notlpack);
 if ($numrows3 > 0) {
+    //change file name here
     $filename3 = "NOTLPack_" . $ftpdate . ".csv";
     $fp3 = fopen("./exports/$filename3", "w"); //open for write
     $data = array();
@@ -327,3 +328,5 @@ if ($numrows7 > 0) {
 
     }
 }
+
+//add raw NOFNVI data to nextview, C:\xampp\htdocs\printvis_logic\tableupdates\box_pack.php

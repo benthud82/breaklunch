@@ -11,8 +11,8 @@ include_once('Net/SFTP.php');
 $today = date('Y-m-d');
 $ftpdate = date('Y-m-d');
 
-$today = '2024-08-21';
-$ftpdate = '2024-08-21';
+$today = '2025-07-31';
+$ftpdate = '2025-07-31';
 
 // Function to upload a file to the FTP server
 function _ftpupload($filename)
@@ -114,7 +114,7 @@ foreach ($whsearray as $whse) {
     $sql_eod->execute(); // Execute the query
     $eod_array = $sql_eod->fetchAll(pdo::FETCH_ASSOC); // Fetch all results as an associative array
     $numrows2 = count($eod_array); // Count the number of rows returned
-    if ($numrows2 > 0) {    
+    if ($numrows2 > 0) {
         // Create a filename for the CSV file
         $filename2 = $text . "_" . "eod" . "_" . $whse . "_" . $ftpdate . ".csv";
         $fp2 = fopen("./exports/$filename2", "w"); // Open the file for writing
@@ -202,7 +202,9 @@ foreach ($whsearray as $whse) {
                                         TIMESTAMP_A ,
                                         TIMESTAMP_P ,
                                         TIMESTAMP_D ,
-                                        TIMESTAMP_C
+                                        TIMESTAMP_C,
+					FUTURE_USE_N2
+
                                     FROM
                                         HSIPCORDTA.HWSTREM
                                     WHERE

@@ -35,24 +35,13 @@ function _ftpupload($filename) {
 }
 
 
-$sql_notlpack = $dbh->prepare("SELECT Pack.Badge_Num, 
-                                        RIGHT(REPLICATE('0', 5) + Pack.Batch_Num, 5) as Batch_Num, 
-                                        Pack.Cart_Num, 
-                                        Pack.CEErrors, 
-                                        convert(varchar(25), Pack.DateCreated, 120) AS START, 
-                                        convert(varchar(25), Pack.DateTimeComplete, 120) AS COMPLETE, 
-                                        Pack.HelpPack, 
-                                        Pack.NPErrors, 
-                                        Pack.Pack_ID, 
-                                        Pack.WIErrors, 
-                                        Pack.WTErrors, 
-                                        Tote.ToteLocation, 
-                                        Tote.WCS_Num, 
-                                        Tote.WorkOrder_Num, 
-                                        Tote.Box_Num,
-                                        'J-115' as JobType
-                                        FROM HenrySchein.dbo.Pack Pack, HenrySchein.dbo.Tote Tote
-                                        WHERE Pack.Batch_Num = Tote.Batch_Num and Pack.DateCreated >= '$today' and DateTimeComplete <> ' '");
+$sql_notlpack = $dbh->prepare("SELECT DISTINCT
+                                            NVFLAT
+                                  FROM
+                                            HSIPCORDTA.NOFNVI
+                                  WHERE
+                                            TRIM(substr(NVFLAT,137,10))    <> ' '
+                                            and TRIM(substr(NVFLAT,137,10)) = '$today'");  
 
 
 
@@ -62,7 +51,7 @@ print_r($array_notlpack);
 
 $numrows3 = count($array_notlpack);
 if ($numrows3 > 0) {
-    $filename3 = "NOTLPack_" . $ftpdate . ".csv";
+    $filename3 = "NOTL_WCSPack_Export_" . $ftpdate . ".csv";
     $fp3 = fopen("./exports/$filename3", "w"); //open for write
     $data = array();
 
@@ -76,51 +65,52 @@ if ($numrows3 > 0) {
 }
 
 // NOTL CasePicking Data for PM
-$sql_NOTLcase = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE, 
-                                        LPAD(A.PBCART, 5, '0') AS BATCH, 
-                                        A.PBBIN# AS TOTENUMBER,
-                                        A.PBBXSZ AS BOXSIZE,
-                                        B.PDITEM AS ITEM,
-                                        B.PDPKGU AS PKGU,
-                                        B.PDPCKQ AS QTY,
-                                        B.PDLOC# AS LOCATION,                                        
-                                        A.PBBOX# AS BOXNUMBER,
-                                        A.PBLP9D AS LICENSE,
-                                        A.PBSHPC AS TYPE,
-                                        A.PBWCS# AS WCSNUMBER,
-                                        A.PBWKNO AS WORKORDERNUMBER,
-                                        CHAR(DATE('20'||DIGITS(A.PBPTJD))) AS PRINTDATE
+// Commented out on 8/20/2025, no longer needed because of full NOFNVI file 
+// $sql_NOTLcase = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE, 
+//                                         LPAD(A.PBCART, 5, '0') AS BATCH, 
+//                                         A.PBBIN# AS TOTENUMBER,
+//                                         A.PBBXSZ AS BOXSIZE,
+//                                         B.PDITEM AS ITEM,
+//                                         B.PDPKGU AS PKGU,
+//                                         B.PDPCKQ AS QTY,
+//                                         B.PDLOC# AS LOCATION,                                        
+//                                         A.PBBOX# AS BOXNUMBER,
+//                                         A.PBLP9D AS LICENSE,
+//                                         A.PBSHPC AS TYPE,
+//                                         A.PBWCS# AS WCSNUMBER,
+//                                         A.PBWKNO AS WORKORDERNUMBER,
+//                                         CHAR(DATE('20'||DIGITS(A.PBPTJD))) AS PRINTDATE
                                                                                 
-                                        FROM ARCPCORDTA.NOTWPB A
-                                        JOIN ARCPCORDTA.NOTWPD B on B.PDWCS# = A.PBWCS# and B.PDWKNO = A.PBWKNO and A.PBBOX# = B.PDBOX# 
-                                        WHERE A.PBWHSE = 11
-                                        and A.PBBXSZ = 'CSE'
-                                        and B.PDLOC# not like ('%MSDS%')
-                                        and A.PBCART > 0
-                                        and CHAR(DATE('20'||DIGITS(A.PBPTJD))) >='$today'");
+//                                         FROM ARCPCORDTA.NOTWPB A
+//                                         JOIN ARCPCORDTA.NOTWPD B on B.PDWCS# = A.PBWCS# and B.PDWKNO = A.PBWKNO and A.PBBOX# = B.PDBOX# 
+//                                         WHERE A.PBWHSE = 11
+//                                         and A.PBBXSZ = 'CSE'
+//                                         and B.PDLOC# not like ('%MSDS%')
+//                                         and A.PBCART > 0
+//                                         and CHAR(DATE('20'||DIGITS(A.PBPTJD))) >='$today'");
 
 
 
-$sql_NOTLcase->execute();
-$array_NOTLcase = $sql_NOTLcase->fetchAll(pdo::FETCH_ASSOC);
+// $sql_NOTLcase->execute();
+// $array_NOTLcase = $sql_NOTLcase->fetchAll(pdo::FETCH_ASSOC);
 
 
-$numrows8 = count($array_NOTLcase);
-if ($numrows8 > 0) {
-    $filename8 = "NOTLCase_" . $ftpdate . ".csv";
-    $fp8 = fopen("./exports/$filename8", "w"); //open for write
-    $data = array();
+// $numrows8 = count($array_NOTLcase);
+// if ($numrows8 > 0) {
+//     $filename8 = "NOTLCase_" . $ftpdate . ".csv";
+//     $fp8 = fopen("./exports/$filename8", "w"); //open for write
+//     $data = array();
 
-    foreach ($array_NOTLcase as $key => $value) {
-        //$data[] = $breaklunch_array[$key];
-        fputcsv($fp8, $array_NOTLcase[$key]);
-        //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
- }
+//     foreach ($array_NOTLcase as $key => $value) {
+//         //$data[] = $breaklunch_array[$key];
+//         fputcsv($fp8, $array_NOTLcase[$key]);
+//         //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
+//  }
      
-    fclose($fp8); //close connection
-    $sendftp8 = _ftpupload($filename8); //upload to nextview 
+//     fclose($fp8); //close connection
+//     $sendftp8 = _ftpupload($filename8); //upload to nextview 
 
-    }
+//     }
 
     
     // NOTL Parts / nsi Data for PM

@@ -202,7 +202,7 @@ foreach ($whsearray as $whse) {
                                         TIMESTAMP_P ,
                                         TIMESTAMP_D ,
                                         TIMESTAMP_C
-                                    FROM
+, FUTURE_USE_N2                                    FROM
                                         HSIPCORDTA.HWSTREM
                                     WHERE
                                         WAREHOUSE = $whse AND
