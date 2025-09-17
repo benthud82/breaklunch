@@ -8,6 +8,7 @@ include_once 'Net/SFTP.php';
 
 
 $today = date('Y-m-d');
+$today = date('2025-09-15');
 $ftpdate = date('Y-m-d');
 
 $ftpdate1 = date('Y-m-d');
@@ -35,10 +36,10 @@ function _ftpupload($filename) {
 }
 
 
-$sql_notlpack = $dbh->prepare("SELECT DISTINCT
+$sql_notlpack = $aseriesconn_can->prepare("SELECT DISTINCT
                                             NVFLAT
                                   FROM
-                                            HSIPCORDTA.NOFNVI
+                                            ARCPCORDTA.NOFNVI
                                   WHERE
                                             TRIM(substr(NVFLAT,137,10))    <> ' '
                                             and TRIM(substr(NVFLAT,137,10)) = '$today'");  
@@ -57,7 +58,7 @@ if ($numrows3 > 0) {
 
     foreach ($array_notlpack as $key => $value) {
         //$data[] = $breaklunch_array[$key];
-        fputcsv($fp3, $array_notlpack[$key]);
+        fwrite($fp3, $array_notlpack[$key]['NVFLAT'] . "\n");
         //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
  }
     fclose($fp3); //close connection
