@@ -5,36 +5,32 @@ include_once '../connections/conn_printvis.php';
 //include_once '../globalincludes/newcanada_asys.php';
 //include_once '../globalincludes/voice_11.php';
 include_once '../globalincludes/usa_asys.php';
-include_once('Net/SFTP.php');
+
 
 
 $today = date('Y-m-d');
 $ftpdate = date('Y-m-d');
 
-$today = '2024-08-21';
-$ftpdate = '2024-08-21';
+$today = '2025-11-21';
+$ftpdate = '2025-11-21';
 
 // Function to upload a file to the FTP server
-function _ftpupload($filename)
+function _ftpupload($ftpfilename)
 {
-    $dest = "$filename";
-    $source = "./exports/$filename";
-    
-
-    $sftp = new Net_SFTP('sf.henryschein.com');
-
-    if (!$sftp->login('Hsinextview', 'EballMM15!')) {
-
-        exit('Login Failed');
-
+    //* Transfer file to FTP server *//		
+    $server = "172.16.1.203"; // FTP server address
+    $ftp_user_name = "nextview"; // FTP username
+    $ftp_user_pass = "NextView9"; // FTP password
+    $dest = "$ftpfilename"; // Destination filename on the FTP server
+    $source = "./exports/$ftpfilename"; // Source file path on the local server
+    $connection = ftp_connect($server); // Establish FTP connection
+    $login = ftp_login($connection, $ftp_user_name, $ftp_user_pass); // Login to FTP server
+    if (!$connection || !$login) {
+        echo 'Connection attempt failed!'; // Output error message if connection or login fails
     }
+    $upload = ftp_put($connection, $dest, $source, FTP_ASCII); // Upload the file to the FTP server
 
-    //     $sftp->put('destfile', 'srcfile', NET_SFTP_LOCAL_FILE);
-
-    $sftp->put($dest, $source, NET_SFTP_LOCAL_FILE);
-
-    $sftp->disconnect();
-
+    ftp_close($connection); // Close the FTP connection
 }
 
 // Array of warehouse IDs
@@ -82,7 +78,7 @@ foreach ($whsearray as $whse) {
                                                                     FROM
                                                                         printvis.breaklunch
                                                                     WHERE
-                                                                        DATE(bl_datetime) = CURDATE()-1
+                                                                        DATE(bl_datetime) = CURDATE() - INTERVAL 1 DAY
                                                                         and bl_whse = $whse;");
 
     $sql_breaklunch->execute(); // Execute the query
@@ -108,7 +104,7 @@ foreach ($whsearray as $whse) {
                                                                     FROM
                                                                         printvis.eod
                                                                     WHERE
-                                                                        DATE(eod_datetime) = CURDATE()-1
+                                                                        DATE(eod_datetime) = CURDATE() - INTERVAL 1 DAY
                                                                         and eod_whse = $whse;");
 
     $sql_eod->execute(); // Execute the query

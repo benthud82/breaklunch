@@ -36,7 +36,7 @@ function _ftpupload($filename) {
 }
 
 
-$sql_notlpack = $aseriesconn_can->prepare("SELECT DISTINCT
+/* $sql_notlpack = $aseriesconn_can->prepare("SELECT DISTINCT
                                             NVFLAT
                                   FROM
                                             ARCPCORDTA.NOFNVI
@@ -63,7 +63,7 @@ if ($numrows3 > 0) {
  }
     fclose($fp3); //close connection
     $sendftp3 = _ftpupload($filename3); //upload to nextview
-}
+} */
 
 // NOTL CasePicking Data for PM
 // Commented out on 8/20/2025, no longer needed because of full NOFNVI file 

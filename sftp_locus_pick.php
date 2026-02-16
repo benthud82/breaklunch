@@ -53,6 +53,15 @@ function _ftpupload($filename)
 
 }
 
+
+
+ 
+
+
+
+
+
+
 // Array of warehouse IDs
 $whsearray = array(6); //only denver currently has Locus pick data
 // Get the current date in 'Y-m-d' format for the FTP filename
@@ -98,7 +107,7 @@ foreach ($whsearray as $whse) {
                                             FROM
                                                     HSIPCORDTA.HWFPKC
                                             WHERE
-                                                    PKPDTE LIKE ('$yesterday' || '%')");
+							PKPDTE LIKE ('$yesterday' || '%')");
 
     $sql_breaklunch->execute(); // Execute the query
     $breaklunch_array = $sql_breaklunch->fetchAll(pdo::FETCH_ASSOC); // Fetch all results as an associative array

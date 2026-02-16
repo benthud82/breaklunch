@@ -6,11 +6,11 @@ include_once '../globalincludes/voice_11.php';
 include_once('Net/SFTP.php');
 
 
-$today = '2024-08-21';
-$ftpdate = '2024-08-21';
+$today = '2026-01-19';
+$ftpdate = '2026-01-19';
 
 
-$ftpdate1 = '2024-08-21';
+$ftpdate1 = '2026-01-19';
 
 function _ftpupload($filename)
 {
@@ -35,7 +35,7 @@ function _ftpupload($filename)
 }
 
 
-$sql_notlpack = $dbh->prepare("SELECT Pack.Badge_Num, 
+/* $sql_notlpack = $dbh->prepare("SELECT Pack.Badge_Num, 
                                         RIGHT(REPLICATE('0', 5) + Pack.Batch_Num, 5) as Batch_Num, 
                                         Pack.Cart_Num, 
                                         Pack.CEErrors, 
@@ -73,8 +73,9 @@ if ($numrows3 > 0) {
         //$data[] = $picktimerow['bl_tsm'] . $picktimerow['bl_whse'] . $picktimerow['bl_datetime'] . $picktimerow['bl_type'] . $picktimerow['nv_type'] . "\r\n";
  }
     fclose($fp3); //close connection
+    fclose($fp3); //close connection
     $sendftp3 = _ftpupload($filename3); //upload to nextview
-}
+} */
 
 // NOTL CasePicking Data for PM
 $sql_NOTLcase = $aseriesconn_can->prepare("SELECT A.PBWHSE AS WHSE, 

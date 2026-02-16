@@ -12,7 +12,9 @@ include_once('Net/SFTP.php');
 
 // Get today's date in 'Y-m-d' format
 $today = date('Y-m-d');
+//$today = date('2025-11-21');
 $ftpdate = date('Y-m-d');
+//$ftpdate = date('2025-11-21');
 
 // Function to upload a file to the FTP server
 function _ftpupload($filename)
@@ -82,7 +84,7 @@ foreach ($whsearray as $whse) {
                                                                     FROM
                                                                         printvis.breaklunch
                                                                     WHERE
-                                                                        DATE(bl_datetime) = CURDATE()-1
+                                                                        DATE(bl_datetime) = CURDATE() - INTERVAL 1 DAY
                                                                         and bl_whse = $whse;");
 
     $sql_breaklunch->execute(); // Execute the query
@@ -108,7 +110,7 @@ foreach ($whsearray as $whse) {
                                                                     FROM
                                                                         printvis.eod
                                                                     WHERE
-                                                                        DATE(eod_datetime) = CURDATE()-1
+                                                                        DATE(eod_datetime) = CURDATE() - INTERVAL 1 DAY
                                                                         and eod_whse = $whse;");
 
     $sql_eod->execute(); // Execute the query
@@ -180,7 +182,7 @@ foreach ($whsearray as $whse) {
 
     //Shorts extract
     // Get yesterday's date in 'Y-m-d' format
-    $yesterday = date('Y-m-d', strtotime('-1 day'));
+ /*    $yesterday = date('Y-m-d', strtotime('-1 day'));
 
     $sql_shorts = $as400_conn->prepare("SELECT
                                         WAREHOUSE   ,
@@ -226,7 +228,7 @@ foreach ($whsearray as $whse) {
         }
         fclose($fp4); // Close the file
         $sendftp4 = _ftpupload($filename4); // Upload the file to the FTP server
-    }
+    } */
 
 
 
